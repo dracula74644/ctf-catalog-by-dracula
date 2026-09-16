@@ -1,0 +1,39 @@
+# CTF Challenge Catalog
+
+A personal, growing library of challenge **recipes** — reused across every CTF you
+build on the blueprint. It stores *mechanics, not code*: the vulnerability and the
+player's solve path in the abstract, separated from any one CTF's story. That's why
+it works even though your past CTFs had different architectures — you reuse the
+mechanic and re-skin it, you never port old code.
+
+## Layout
+```
+README.md            this file
+RECIPE-TEMPLATE.md   copy this to add a recipe
+index.md             one-line list of every recipe (auto-generated)
+recipes/             one file per challenge recipe
+```
+
+## How to use it when building a CTF
+
+1. Browse `index.md`, pick a recipe that fits the CTF you're building.
+2. Tell Claude (in the CTF's own repo): *"add catalog recipe `<slug>`, themed to
+   this CTF's <story>."*
+3. Claude reads the recipe, re-skins the **mechanic** to your theme, and wires it as
+   a normal blueprint challenge (fresh flag + prefix/postfix, placed per your call).
+   The recipe is the reference; the wiring is always blueprint-native.
+
+## How to grow it
+
+- After you build a genuinely new challenge, add a recipe: `cp RECIPE-TEMPLATE.md
+  recipes/<slug>.md`, fill it in (mechanic + solve + skin points, no story), then
+  regenerate the index: `python3 gen-index.py`.
+- Keep each recipe theme-agnostic. If you're writing a company name or a filename,
+  that's a *skin point*, not part of the mechanic.
+
+## Field notes
+- **box_type** maps to the blueprint: `hosted` (a service on a port) or `download`
+  (a file the portal serves). `either` = works both ways.
+- **category** is `with_key` (flag + rotating access key) or `without_key` (flag only).
+- **status** `idea` = a recipe you want to build but haven't yet; write the mechanic
+  now, flesh it out when you use it.
