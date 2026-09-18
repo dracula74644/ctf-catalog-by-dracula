@@ -14,6 +14,18 @@ index.md             one-line list of every recipe (auto-generated)
 recipes/             one file per challenge recipe
 ```
 
+## Browse it in your browser
+
+```
+./serve.sh            # then open http://localhost:8099/web/
+```
+A local, offline web viewer: every recipe as a card, filter by category / type /
+difficulty / status, search by title or skills, and per recipe **View**,
+**Download .md**, and **Copy reuse prompt** (a ready-to-paste prompt with the full
+mechanic embedded — paste it into Claude in any CTF to build that challenge). It
+reads your recipe files directly, so it is always current; `serve.sh` regenerates the
+data each run. Nothing leaves your machine.
+
 ## How to use it when building a CTF
 
 1. Browse `index.md`, pick a recipe that fits the CTF you're building.
