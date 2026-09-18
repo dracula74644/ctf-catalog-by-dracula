@@ -5,7 +5,6 @@ skills: stego, forensics, carving
 difficulty: easy
 box_type: download
 category: with_key
-source: CTF1 "First Shift" — flag 2
 status: built
 ---
 
@@ -26,4 +25,4 @@ Change: the cover image, archive nesting, notes story.
 Keep: valid image + appended/embedded archive that carves cleanly.
 
 ## Blueprint mapping
-download; build.py builds the PNG + appended archive with placeholders inside. Reference: CTF1 build/flag2_carve.py.
+download; build.py builds the PNG + appended archive with placeholders inside.

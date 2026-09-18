@@ -5,7 +5,6 @@ skills: log-analysis, encoding, forensics
 difficulty: medium
 box_type: hosted
 category: with_key
-source: CTF1 "First Shift" — flag 1
 status: built
 ---
 
@@ -26,4 +25,4 @@ Change: the encoding chain, log volume, the beacon path.
 Keep: signal-in-noise beacons + a leaked encoding recipe; decoys.
 
 ## Blueprint mapping
-hosted (SSH box) or download (the logs). build.py writes the logs with the encoded payload (placeholders encoded in). Reference: CTF1 build/flag1_logs.py.
+hosted (SSH box) or download (the logs). build.py writes the logs with the encoded payload (placeholders encoded in).

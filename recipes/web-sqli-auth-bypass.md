@@ -5,7 +5,6 @@ skills: web, sqli, auth-bypass
 difficulty: medium
 box_type: hosted
 category: with_key
-source: CTF2 "Breach Response" — flag 3
 status: built
 ---
 
@@ -26,4 +25,4 @@ Change: company/app name, admin username, page copy, the filter's exact blocked 
 Keep: the concatenated query + the bypass being possible.
 
 ## Blueprint mapping
-hosted; small web app in target/ (Flask or PHP). build.py renders login + admin templates with __FLAG_<ID>__ and __ACCESS_KEY_<ID>__. Reference mechanic: CTF2 target/app/app.py (login/admin).
+hosted; small web app in target/ (Flask or PHP). build.py renders login + admin templates with __FLAG_<ID>__ and __ACCESS_KEY_<ID>__.

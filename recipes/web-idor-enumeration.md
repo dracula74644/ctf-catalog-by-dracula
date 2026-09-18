@@ -5,7 +5,6 @@ skills: web, idor, access-control
 difficulty: easy
 box_type: hosted
 category: with_key
-source: CTF3 "Deep Access" — stage 4 (ticket IDOR)
 status: built
 ---
 
@@ -26,4 +25,4 @@ Change: record type (tickets/orders/invoices), the ids, the story.
 Keep: no access-control check on ?id=, an unlinked internal record, decoys.
 
 ## Blueprint mapping
-hosted; build.py generates the records data (public + internal + decoys) with placeholders in the internal one; the app serves them through the viewer only. Reference: CTF3 build/ch4_ticket_idor.py.
+hosted; build.py generates the records data (public + internal + decoys) with placeholders in the internal one; the app serves them through the viewer only.

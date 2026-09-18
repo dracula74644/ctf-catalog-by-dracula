@@ -5,7 +5,6 @@ skills: forensics, pcap, network
 difficulty: easy
 box_type: download
 category: with_key
-source: CTF2 "Breach Response" — flag 1
 status: built
 ---
 
@@ -26,4 +25,4 @@ Change: protocol, hostnames, the account, surrounding traffic.
 Keep: one cleartext auth exchange; token in a nearby field.
 
 ## Blueprint mapping
-download; build.py generates the pcap with the exchange (placeholders baked into the built bytes). Reference: CTF2 datagen/pcapgen.py + generate.py.
+download; build.py generates the pcap with the exchange (placeholders baked into the built bytes).

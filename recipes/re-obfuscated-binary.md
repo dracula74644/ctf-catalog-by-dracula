@@ -5,7 +5,6 @@ skills: reverse-engineering, binary
 difficulty: hard
 box_type: download
 category: with_key
-source: CTF1 "First Shift" — flag 3
 status: built
 ---
 
@@ -26,4 +25,4 @@ Change: the mask/algorithm, strings, the gate word.
 Keep: obfuscated strings + a reversible unmask routine; one read-only secret.
 
 ## Blueprint mapping
-download; build.py compiles/obfuscates the binary with placeholders masked in. Reference: CTF1 build/flag3_binary.py + build/flag3/analyser.c.
+download; build.py compiles/obfuscates the binary with placeholders masked in.

@@ -5,7 +5,6 @@ skills: box, privesc, linux
 difficulty: medium
 box_type: hosted
 category: with_key
-source: CTF3 "Deep Access" — stage 3 (root)
 status: built
 ---
 
@@ -27,4 +26,4 @@ Change: the helper's name/purpose, the hijacked command.
 Keep: setuid(0) + a bare-name system() call; no helpful sudo.
 
 ## Blueprint mapping
-hosted; Dockerfile compiles the SUID root-owned +s; build.py plants /root files (placeholders) + records the vector. Reference: CTF3 target/svc-health.c + build/ch3_privesc_suid.py.
+hosted; Dockerfile compiles the SUID root-owned +s; build.py plants /root files (placeholders) + records the vector.

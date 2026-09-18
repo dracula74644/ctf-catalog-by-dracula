@@ -5,7 +5,6 @@ skills: forensics, pcap, file-carving
 difficulty: medium
 box_type: download
 category: with_key
-source: CTF2 "Breach Response" — flag 5
 status: built
 ---
 
@@ -26,4 +25,4 @@ Change: object name/type, transport, the data.
 Keep: a carvable transferred object with flag+key inside.
 
 ## Blueprint mapping
-download; build.py generates the pcap embedding the gzip object. Reference: CTF2 datagen/pcapgen.py (HTTP object).
+download; build.py generates the pcap embedding the gzip object.

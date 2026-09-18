@@ -5,7 +5,6 @@ skills: web, recon, information-disclosure
 difficulty: easy
 box_type: hosted
 category: with_key
-source: CTF3 "Deep Access" — stage 1 (recon)
 status: built
 ---
 
@@ -26,4 +25,4 @@ Change: company, filenames, the scheme hint, decoy contents.
 Keep: a web-reachable-but-unlinked backup that leaks recon, plus decoys.
 
 ## Blueprint mapping
-hosted (or download for a pure recon file); build.py writes the docroot + /backups with the real leak (placeholders) and decoy .bak files. Reference: CTF3 build/ch1_webapp_backup.py.
+hosted (or download for a pure recon file); build.py writes the docroot + /backups with the real leak (placeholders) and decoy .bak files.

@@ -5,7 +5,6 @@ skills: web, rce, command-injection
 difficulty: hard
 box_type: hosted
 category: with_key
-source: CTF2 "Breach Response" — flag 6
 status: built
 ---
 
@@ -26,4 +25,4 @@ Change: panel name/version, creds, the diag feature's story.
 Keep: input reaching a shell; the jail + missing-tools twist if you want the difficulty.
 
 ## Blueprint mapping
-hosted; web app + a sandboxed exec path in the entrypoint. build.py + entrypoint build the jail. Reference: CTF2 target/entrypoint.sh (diag jail) + app.py (/panel/diag).
+hosted; web app + a sandboxed exec path in the entrypoint. build.py + entrypoint build the jail.

@@ -5,7 +5,6 @@ skills: crypto, openssl
 difficulty: medium
 box_type: download
 category: with_key
-source: CTF1 "First Shift" — flag 4
 status: built
 ---
 
@@ -26,4 +25,4 @@ Change: cipher params, the passwords, the note story, layer count.
 Keep: a passphrase-gated blob whose note reveals the next password.
 
 ## Blueprint mapping
-download; build.py encrypts the layers with placeholders in the plaintext. Reference: CTF1 build/flag4_vault.py.
+download; build.py encrypts the layers with placeholders in the plaintext.

@@ -5,7 +5,6 @@ skills: web, lfi, path-traversal
 difficulty: medium
 box_type: hosted
 category: with_key
-source: CTF2 "Breach Response" — flag 4
 status: built
 ---
 
@@ -26,4 +25,4 @@ Change: endpoint name, the doc that leaks the path, the filename read.
 Keep: the encoded-traversal bypass of the stopgap filter.
 
 ## Blueprint mapping
-hosted; web app with a file-read route + a filter. build.py writes the readable target with the placeholders. Reference: CTF2 target/app (/view) + docs/hardening-checklist.
+hosted; web app with a file-read route + a filter. build.py writes the readable target with the placeholders.

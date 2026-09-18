@@ -5,7 +5,6 @@ skills: forensics, pcap, c2, network
 difficulty: medium
 box_type: download
 category: with_key
-source: CTF2 "Breach Response" — flag 2
 status: built
 ---
 
@@ -26,4 +25,4 @@ Change: attacker IP/port, interval, beacon count, protocol dressing.
 Keep: regular beaconing to one dst; key in the reply.
 
 ## Blueprint mapping
-download; build.py generates the pcap with beacons + noise. Reference: CTF2 datagen/pcapgen.py (C2 section).
+download; build.py generates the pcap with beacons + noise.

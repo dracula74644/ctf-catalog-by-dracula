@@ -5,7 +5,6 @@ skills: box, brute-force, passwords
 difficulty: medium
 box_type: hosted
 category: with_key
-source: CTF3 "Deep Access" — stage 2 (foothold)
 status: built
 ---
 
@@ -26,4 +25,4 @@ Change: username, the scheme + wordlist, decoy names.
 Keep: password-auth on, a targeted-wordlist-only password, decoys.
 
 ## Blueprint mapping
-hosted; SSH container in target/, password set at boot from TARGET_PASS. build.py plants the home files with placeholders. Reference: CTF3 target (sshd) + build/ch2_foothold.py + common.py wordlist.
+hosted; SSH container in target/, password set at boot from TARGET_PASS. build.py plants the home files with placeholders.

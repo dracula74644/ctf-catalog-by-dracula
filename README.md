@@ -23,6 +23,11 @@ recipes/             one file per challenge recipe
    a normal blueprint challenge (fresh flag + prefix/postfix, placed per your call).
    The recipe is the reference; the wiring is always blueprint-native.
 
+**Only the mechanic crosses over.** Every name, filename, hostname, account, and
+story is invented fresh for the new CTF. Never carry a name, string, or line of
+code from a past CTF — the recipe holds no old names on purpose, so there is
+nothing to copy but the technique. Reimplement from the technical description.
+
 ## How to grow it
 
 - After you build a genuinely new challenge, add a recipe: `cp RECIPE-TEMPLATE.md

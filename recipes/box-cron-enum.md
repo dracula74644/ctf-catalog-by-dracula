@@ -5,7 +5,6 @@ skills: box, enumeration, linux
 difficulty: easy
 box_type: hosted
 category: with_key
-source: CTF3 "Deep Access" — stage 5 (cron)
 status: built
 ---
 
@@ -26,4 +25,4 @@ Change: the job's name/purpose, paths, cadence.
 Keep: a root cron job with a readable log; readable-not-writable script.
 
 ## Blueprint mapping
-hosted; entrypoint installs the cron file + runs the script once; build.py writes the script/log with placeholders. Reference: CTF3 build/ch5_cron_report.py + target/entrypoint.sh.
+hosted; entrypoint installs the cron file + runs the script once; build.py writes the script/log with placeholders.
