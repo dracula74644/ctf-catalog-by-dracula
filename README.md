@@ -33,6 +33,11 @@ nothing to copy but the technique. Reimplement from the technical description.
 - After you build a genuinely new challenge, add a recipe: `cp RECIPE-TEMPLATE.md
   recipes/<slug>.md`, fill it in (mechanic + solve + skin points, no story), then
   regenerate the index: `python3 gen-index.py`.
+- To pull in a challenge from an OLD CTF (even one Claude has never seen), run the
+  **recipe-extractor** agent (`.claude/agents/`) or just prompt from this folder:
+  *"add a recipe from this challenge"* and point it at the source — a repo/folder on
+  disk, pasted files, a host to SSH into, or a written description. It distills the
+  mechanic, strips every name, writes the recipe, and updates the index.
 - Keep each recipe theme-agnostic. If you're writing a company name or a filename,
   that's a *skin point*, not part of the mechanic.
 
