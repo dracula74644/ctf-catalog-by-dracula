@@ -91,9 +91,9 @@
         '<div class="cattag">'+esc(r.category)+'</div>'+
         '<h2>'+esc(r.title)+'</h2>'+
         '<div class="badge '+r.difficulty+'">'+esc(r.difficulty)+'</div>'+
-        '<div class="skills">'+(r.skills||[]).map(esc).join(" · ")+'</div>'+
+        '<div class="skills">'+(r.skills||[]).map(function(s){return '<span class="skill">'+esc(s)+'</span>';}).join("")+'</div>'+
         (r.source_ctf?'<div class="src">from <b>'+esc(r.source_ctf)+'</b></div>':'')+
-        '<div class="btns"><button class="act view">View</button>'+
+        '<div class="btns"><button class="act primary view">View</button>'+
         '<a class="act" href="'+this.mdHref(r.slug)+'" download>.md</a>'+
         '<button class="act cp">Copy prompt</button></div></article>';
     },
