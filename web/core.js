@@ -39,7 +39,7 @@
   var _toast;
   function toast(msg){
     if(!_toast){_toast=document.createElement("div");_toast.style.cssText=
-      "position:fixed;bottom:22px;left:50%;transform:translateX(-50%);background:#4fd1c5;color:#08120f;"+
+      "position:fixed;bottom:22px;left:50%;transform:translateX(-50%);background:#ededed;color:#0a0a0b;"+
       "font-weight:700;padding:11px 18px;border-radius:10px;z-index:99;transition:opacity .2s";
       document.body.appendChild(_toast);}
     _toast.textContent=msg;_toast.style.opacity="1";setTimeout(function(){_toast.style.opacity="0";},1300);
@@ -50,9 +50,9 @@
   function openModal(r){
     if(!modal){
       modal=document.createElement("dialog");
-      modal.style.cssText="max-width:780px;width:92%;border:1px solid #2a3340;border-radius:16px;background:#1b232c;color:#eaf0f6;padding:0";
-      modal.innerHTML='<div style="display:flex;justify-content:space-between;align-items:center;padding:16px 20px;border-bottom:1px solid #2a3340;position:sticky;top:0;background:#1b232c">'+
-        '<h2 id="cm-t" style="margin:0;font-size:19px"></h2><button id="cm-x" style="background:0;border:0;color:#8fa0b0;font-size:26px;cursor:pointer">&times;</button></div>'+
+      modal.style.cssText="max-width:780px;width:92%;border:1px solid #282a2e;border-radius:16px;background:#141416;color:#f5f5f6;padding:0";
+      modal.innerHTML='<div style="display:flex;justify-content:space-between;align-items:center;padding:16px 20px;border-bottom:1px solid #282a2e;position:sticky;top:0;background:#141416">'+
+        '<h2 id="cm-t" style="margin:0;font-size:19px"></h2><button id="cm-x" style="background:0;border:0;color:#9a9ba3;font-size:26px;cursor:pointer">&times;</button></div>'+
         '<div id="cm-b" style="padding:10px 20px 22px"></div>';
       document.body.appendChild(modal);
       modal.querySelector("#cm-x").onclick=function(){modal.close();};
@@ -61,12 +61,12 @@
     modal.querySelector("#cm-t").textContent=r.title;
     var md_href=WEB+"../recipes/"+r.slug+".md";
     modal.querySelector("#cm-b").innerHTML=
-      '<div style="color:#4fd1c5;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.4px">'+esc(r.category)+'</div>'+
-      '<div style="margin:8px 0;color:#8fa0b0;font-size:12.5px">'+esc(r.difficulty)+' · '+esc(r.box_type)+(r.source_ctf?' · from <b style="color:#eaf0f6">'+esc(r.source_ctf)+'</b>':'')+'</div>'+
+      '<div style="color:#9a9ba3;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.4px">'+esc(r.category)+'</div>'+
+      '<div style="margin:8px 0;color:#9a9ba3;font-size:12.5px">'+esc(r.difficulty)+' · '+esc(r.box_type)+(r.source_ctf?' · from <b style="color:#f5f5f6">'+esc(r.source_ctf)+'</b>':'')+'</div>'+
       '<div class="cm-md">'+md(r.body)+'</div>'+
       '<div style="margin-top:16px;display:flex;gap:8px;flex-wrap:wrap">'+
-      '<a href="'+md_href+'" download style="background:#151b22;color:#eaf0f6;border:1px solid #2a3340;border-radius:8px;padding:7px 12px;text-decoration:none;font-size:12.5px">Download .md</a>'+
-      '<button id="cm-cp" style="background:#151b22;color:#eaf0f6;border:1px solid #2a3340;border-radius:8px;padding:7px 12px;cursor:pointer;font-size:12.5px">Copy reuse prompt</button></div>';
+      '<a href="'+md_href+'" download style="background:#1c1c20;color:#f5f5f6;border:1px solid #282a2e;border-radius:8px;padding:7px 12px;text-decoration:none;font-size:12.5px">Download .md</a>'+
+      '<button id="cm-cp" style="background:#1c1c20;color:#f5f5f6;border:1px solid #282a2e;border-radius:8px;padding:7px 12px;cursor:pointer;font-size:12.5px">Copy reuse prompt</button></div>';
     modal.querySelector("#cm-cp").onclick=function(){copy(promptFor(r),"prompt copied — paste into Claude in your CTF");};
     modal.showModal();
   }
@@ -111,18 +111,18 @@
       var m=this._addm;
       if(!m){
         m=document.createElement("dialog"); this._addm=m;
-        m.style.cssText="max-width:720px;width:92%;border:1px solid #44475a;border-radius:16px;background:#343746;color:#f8f8f2;padding:0";
-        var box="background:#282a36;padding:1px 5px;border-radius:4px;font-family:ui-monospace,monospace;font-size:12px";
+        m.style.cssText="max-width:720px;width:92%;border:1px solid #282a2e;border-radius:16px;background:#141416;color:#f5f5f6;padding:0";
+        var box="background:#0a0a0b;padding:1px 5px;border-radius:4px;font-family:ui-monospace,monospace;font-size:12px";
         m.innerHTML=
-          '<div style="display:flex;justify-content:space-between;align-items:center;padding:16px 20px;border-bottom:1px solid #44475a;position:sticky;top:0;background:#343746">'+
-          '<h2 style="margin:0;font-size:19px">Add a recipe</h2><button id="ar-x" style="background:0;border:0;color:#a4abd0;font-size:26px;cursor:pointer">&times;</button></div>'+
+          '<div style="display:flex;justify-content:space-between;align-items:center;padding:16px 20px;border-bottom:1px solid #282a2e;position:sticky;top:0;background:#141416">'+
+          '<h2 style="margin:0;font-size:19px">Add a recipe</h2><button id="ar-x" style="background:0;border:0;color:#9a9ba3;font-size:26px;cursor:pointer">&times;</button></div>'+
           '<div style="padding:14px 20px 22px">'+
-          '<h3 style="margin:6px 0 6px;color:#bd93f9;font-size:14px">From a CTF &mdash; by prompt (adds every challenge)</h3>'+
-          '<p style="margin:0 0 8px;color:#a4abd0;font-size:13.5px">Paste this into Claude Code inside any CTF folder built on the blueprint. It writes a theme-agnostic recipe for each challenge into this catalog and regenerates it &mdash; refresh this page after.</p>'+
-          '<textarea id="ar-p" readonly style="width:100%;height:220px;background:#282a36;color:#f8f8f2;border:1px solid #44475a;border-radius:10px;padding:12px;font:12.5px/1.5 ui-monospace,monospace;resize:vertical"></textarea>'+
-          '<div style="margin:8px 0 20px"><button id="ar-copy" style="background:#bd93f9;color:#282a36;border:0;border-radius:9px;padding:9px 16px;font-weight:700;cursor:pointer">Copy prompt</button></div>'+
-          '<h3 style="margin:6px 0 6px;color:#ff79c6;font-size:14px">By .md file</h3>'+
-          '<p style="margin:0;color:#a4abd0;font-size:13.5px">Save your recipe as <code style="'+box+'">~/Documents/ctf-catalog/recipes/&lt;slug&gt;.md</code> (use <code style="'+box+'">RECIPE-TEMPLATE.md</code> as the shape), then re-run <code style="'+box+'">./serve.sh</code> and refresh &mdash; the catalog rebuilds from the .md files.</p>'+
+          '<h3 style="margin:6px 0 6px;color:#f5f5f6;font-size:14px">From a CTF &mdash; by prompt (adds every challenge)</h3>'+
+          '<p style="margin:0 0 8px;color:#9a9ba3;font-size:13.5px">Paste this into Claude Code inside any CTF folder built on the blueprint. It writes a theme-agnostic recipe for each challenge into this catalog and regenerates it &mdash; refresh this page after.</p>'+
+          '<textarea id="ar-p" readonly style="width:100%;height:220px;background:#0a0a0b;color:#f5f5f6;border:1px solid #282a2e;border-radius:10px;padding:12px;font:12.5px/1.5 ui-monospace,monospace;resize:vertical"></textarea>'+
+          '<div style="margin:8px 0 20px"><button id="ar-copy" style="background:#ededed;color:#0a0a0b;border:0;border-radius:9px;padding:9px 16px;font-weight:700;cursor:pointer">Copy prompt</button></div>'+
+          '<h3 style="margin:6px 0 6px;color:#f5f5f6;font-size:14px">By .md file</h3>'+
+          '<p style="margin:0;color:#9a9ba3;font-size:13.5px">Save your recipe as <code style="'+box+'">~/Documents/ctf-catalog/recipes/&lt;slug&gt;.md</code> (use <code style="'+box+'">RECIPE-TEMPLATE.md</code> as the shape), then re-run <code style="'+box+'">./serve.sh</code> and refresh &mdash; the catalog rebuilds from the .md files.</p>'+
           '</div>';
         document.body.appendChild(m);
         var PROMPT=[
@@ -156,5 +156,5 @@
   window.CATALOG=CATALOG;
   fetch(WEB+"recipes.json").then(function(r){return r.json();}).then(function(d){
     CATALOG.data=d; if(window.onCatalog) window.onCatalog(d); repaint();
-  }).catch(function(){ document.body.insertAdjacentHTML("beforeend","<p style='padding:24px;color:#8fa0b0'>recipes.json not found — run ./serve.sh</p>"); });
+  }).catch(function(){ document.body.insertAdjacentHTML("beforeend","<p style='padding:24px;color:#9a9ba3'>recipes.json not found — run ./serve.sh</p>"); });
 })();

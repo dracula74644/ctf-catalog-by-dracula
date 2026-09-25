@@ -1,36 +1,41 @@
 <!doctype html><html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1"><title>CTF Catalog By Dracula</title>
 <style>
- :root{--bg:#282a36;--card:#343746;--card2:#3c3f52;--line:#44475a;--tx:#f8f8f2;--dim:#a4abd0;
-   --purple:#bd93f9;--pink:#ff79c6;--cyan:#8be9fd;--green:#50fa7b;--yellow:#f1fa8c;--orange:#ffb86c;--red:#ff5555;--comment:#6272a4}
+ /* Monochrome bento dashboard — no colour, subtle borders */
+ :root{
+   --bg:#0a0a0b;--card:#141416;--card2:#1c1c20;--line:#282a2e;--line2:#3a3c42;
+   --tx:#f5f5f6;--dim:#9a9ba3;--faint:#6c6d76;--btn:#ededed;--btn-tx:#0a0a0b;
+   --sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif}
  *{box-sizing:border-box}html,body{height:100%}
- body{margin:0;background:var(--bg);color:var(--tx);font:15px/1.55 system-ui,Segoe UI,Roboto,Arial,sans-serif;display:flex;flex-direction:column;height:100vh}
- .bar{border-bottom:1px solid var(--line);padding:18px 28px;display:flex;gap:12px;align-items:center;flex-wrap:wrap;position:sticky;top:0;background:rgba(40,42,54,.92);backdrop-filter:blur(8px);z-index:4}
- .bar h1{margin:0 auto 0 0;font-size:22px;font-weight:800}.bar h1 b{color:var(--purple)}.bar h1 i{color:var(--pink);font-style:normal}
- select{background:var(--card);color:var(--tx);border:1px solid var(--line);border-radius:10px;padding:8px 12px;font-size:13px}
- select:focus{outline:0;border-color:var(--purple);box-shadow:0 0 0 3px rgba(189,147,249,.25)}
- .pill{background:var(--card);border:1px solid var(--line);color:var(--dim);border-radius:999px;padding:6px 14px;font-size:12.5px;cursor:pointer;font-weight:600}.pill.on{background:var(--purple);color:#282a36;border-color:var(--purple)}
- .addbtn{background:var(--green);color:#282a36;border:0;border-radius:9px;padding:8px 15px;font-weight:700;font-size:13px;cursor:pointer;transition:.15s}
- .addbtn:hover{background:var(--cyan)}
- .count{color:var(--comment);font-size:12.5px}
+ body{margin:0;background:var(--bg);color:var(--tx);font:15px/1.5 var(--sans);display:flex;flex-direction:column;height:100vh}
+ .bar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding:15px 26px;border-bottom:1px solid var(--line);position:sticky;top:0;background:rgba(10,10,11,.86);backdrop-filter:blur(9px);z-index:4}
+ .bar h1{margin:0 auto 0 0;font-size:16px;font-weight:650;letter-spacing:.2px}
+ .bar h1 span{color:var(--faint);font-weight:400}
+ select{background:var(--card);color:var(--tx);border:1px solid var(--line);border-radius:8px;padding:8px 11px;font:13px var(--sans);cursor:pointer}
+ select:hover{border-color:var(--line2)}select:focus{outline:0;border-color:#55575e}
+ .pill{background:transparent;border:1px solid var(--line);color:var(--dim);border-radius:8px;padding:7px 13px;font:600 12.5px var(--sans);cursor:pointer;transition:.15s}
+ .pill:hover{border-color:var(--line2);color:var(--tx)}.pill.on{background:var(--tx);color:var(--bg);border-color:var(--tx)}
+ .addbtn{background:var(--btn);color:var(--btn-tx);border:0;border-radius:8px;padding:8px 15px;font:700 13px var(--sans);cursor:pointer;transition:.15s}.addbtn:hover{background:#fff}
+ .count{color:var(--faint);font-size:12.5px}
  main{overflow-y:auto;flex:1}
- .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:18px;padding:22px 28px 46px}
- .box{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px;display:flex;flex-direction:column;gap:10px;cursor:pointer;transition:.18s}
- .box:hover{transform:translateY(-3px);border-color:var(--purple);box-shadow:0 16px 34px -14px rgba(189,147,249,.4)}
- .cattag{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.5px;color:var(--purple)}
- .box h2{margin:0;font-size:17.5px;font-weight:700;line-height:1.3;color:var(--tx)}
- .badge{align-self:flex-start;display:inline-flex;gap:7px;align-items:center;font-size:11px;font-weight:700;text-transform:lowercase;padding:3px 12px;border-radius:999px;border:1px solid var(--line);color:var(--dim);background:transparent}
- .badge::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--dot,var(--dim))}
- .badge.easy{--dot:var(--green)}.badge.medium{--dot:var(--orange)}.badge.hard{--dot:var(--red)}
- .skills{display:flex;gap:6px;flex-wrap:wrap}.skill{font-size:11px;color:var(--dim);background:rgba(255,255,255,.03);border:1px solid var(--line);border-radius:999px;padding:2px 10px}
- .src{color:var(--comment);font-size:11.5px}.src b{color:var(--tx)}
- .btns{display:flex;gap:8px;margin-top:auto;flex-wrap:wrap}
- .act{border-radius:9px;padding:7px 13px;font-size:12.5px;cursor:pointer;text-decoration:none;background:transparent;color:var(--dim);border:1px solid var(--line);transition:.15s}
- .act:hover{color:var(--purple);border-color:var(--purple)}.act.primary{background:var(--purple);color:#282a36;border-color:var(--purple);font-weight:700}.act.primary:hover{filter:brightness(1.12)}
- .empty{grid-column:1/-1;color:var(--comment);text-align:center;padding:70px}
+ .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px;padding:22px 26px 48px}
+ .box{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px;display:flex;flex-direction:column;gap:11px;cursor:pointer;transition:border-color .15s,background .15s,transform .15s}
+ .box:hover{border-color:var(--line2);background:var(--card2);transform:translateY(-2px)}
+ .cattag{font-size:11px;font-weight:700;letter-spacing:.7px;text-transform:uppercase;color:var(--faint)}
+ .box h2{margin:0;font-size:17px;font-weight:600;line-height:1.32;color:var(--tx)}
+ .badge{align-self:flex-start;font-size:10.5px;font-weight:600;letter-spacing:.4px;text-transform:uppercase;color:var(--dim);border:1px solid var(--line);border-radius:6px;padding:3px 9px}
+ .skills{display:flex;gap:6px;flex-wrap:wrap}
+ .skill{font-size:11px;color:var(--dim);background:var(--card2);border:1px solid var(--line);border-radius:6px;padding:2px 9px}
+ .src{color:var(--faint);font-size:12px}.src b{color:var(--dim);font-weight:600}
+ .btns{display:flex;gap:8px;margin-top:6px;flex-wrap:wrap}
+ .act{border-radius:8px;padding:8px 14px;font:13px var(--sans);cursor:pointer;text-decoration:none;background:transparent;color:var(--dim);border:1px solid var(--line);transition:.15s}
+ .act:hover{color:var(--tx);border-color:var(--line2)}
+ .act.primary{background:var(--btn);color:var(--btn-tx);border-color:var(--btn);font-weight:700}.act.primary:hover{background:#fff}
+ .empty{grid-column:1/-1;color:var(--faint);text-align:center;padding:74px}
+ ::-webkit-scrollbar{width:11px}::-webkit-scrollbar-thumb{background:#2a2a2e;border-radius:8px;border:2px solid var(--bg)}::-webkit-scrollbar-thumb:hover{background:#3a3c42}
 </style></head>
 <body>
- <div class="bar"><h1><b>#</b> CTF Catalog <i>By Dracula</i></h1>
+ <div class="bar"><h1>CTF Catalog <span>By Dracula</span></h1>
   <select id="cat"></select><select id="ctf"></select><span id="diffs"></span><span class="count" id="count"></span><button id="addbtn" class="addbtn">+ Add recipe</button></div>
  <main><div class="grid" id="grid"></div></main>
 <script>
