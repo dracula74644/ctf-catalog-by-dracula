@@ -1,6 +1,7 @@
 ---
 slug: logs-encoded-beacons
 title: Encoded exfil hidden in noisy server logs
+discipline: Forensics
 skills: log-analysis, encoding, forensics
 difficulty: medium
 box_type: hosted

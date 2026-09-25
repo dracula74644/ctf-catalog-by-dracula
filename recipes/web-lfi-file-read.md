@@ -1,6 +1,7 @@
 ---
 slug: web-lfi-file-read
 title: Local file read via path traversal
+discipline: Web Exploitation
 skills: web, lfi, path-traversal
 difficulty: medium
 box_type: hosted

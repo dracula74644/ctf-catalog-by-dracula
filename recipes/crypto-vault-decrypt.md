@@ -1,6 +1,7 @@
 ---
 slug: crypto-vault-decrypt
 title: Layered decryption chain to open a sealed file
+discipline: Cryptography
 skills: crypto, openssl
 difficulty: medium
 box_type: download

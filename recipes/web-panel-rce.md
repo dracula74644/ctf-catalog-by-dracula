@@ -1,6 +1,7 @@
 ---
 slug: web-panel-rce
 title: Command injection in an outdated admin panel
+discipline: Web Exploitation
 skills: web, rce, command-injection
 difficulty: hard
 box_type: hosted

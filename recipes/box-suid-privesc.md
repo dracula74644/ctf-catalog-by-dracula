@@ -1,6 +1,7 @@
 ---
 slug: box-suid-privesc
 title: Root via a PATH-hijackable custom SUID binary
+discipline: Privilege Escalation
 skills: box, privesc, linux
 difficulty: medium
 box_type: hosted

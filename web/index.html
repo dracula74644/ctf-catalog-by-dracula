@@ -4,35 +4,28 @@
 <title>CTF Challenge Catalog</title>
 <style>
   :root{--bg:#0f1216;--card:#171c22;--card2:#1c232b;--line:#28313b;--tx:#e8eef4;--dim:#93a1b0;
-        --a:#5db2a6;--k:#7dd3a8;--nk:#7db3d3;--e:#7ec07a;--m:#e0b25a;--h:#e07a7a}
+        --a:#5db2a6;--e:#7ec07a;--m:#e0b25a;--h:#e07a7a}
   *{box-sizing:border-box}
   body{margin:0;background:var(--bg);color:var(--tx);font:15px/1.55 system-ui,Segoe UI,Roboto,Arial,sans-serif}
   header{padding:26px 24px 8px;max-width:1200px;margin:0 auto}
   h1{margin:0;font-size:24px} .count{color:var(--dim);font-size:13px}
-  .bar{position:sticky;top:0;background:var(--bg);border-bottom:1px solid var(--line);
-    padding:12px 24px;z-index:5}
+  .bar{position:sticky;top:0;background:var(--bg);border-bottom:1px solid var(--line);padding:12px 24px;z-index:5}
   .bar .row{max-width:1200px;margin:0 auto;display:flex;gap:10px;flex-wrap:wrap;align-items:center}
-  select,input{background:var(--card2);color:var(--tx);border:1px solid var(--line);
-    border-radius:8px;padding:8px 10px;font-size:13.5px}
+  select,input{background:var(--card2);color:var(--tx);border:1px solid var(--line);border-radius:8px;padding:8px 10px;font-size:13.5px}
   input.search{flex:1;min-width:180px}
-  main{max-width:1200px;margin:0 auto;padding:18px 24px 60px;
-    display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:14px}
+  main{max-width:1200px;margin:0 auto;padding:18px 24px 60px;display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:14px}
   .card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px;display:flex;flex-direction:column;gap:10px}
   .card h2{margin:0;font-size:16.5px}
+  .disc{font-size:12px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:var(--a)}
   .badges{display:flex;gap:6px;flex-wrap:wrap}
-  .b{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.3px;padding:2px 8px;border-radius:999px;border:1px solid var(--line)}
+  .b{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.3px;padding:2px 8px;border-radius:999px;border:1px solid var(--line);color:var(--dim)}
   .b.easy{color:var(--e)} .b.medium{color:var(--m)} .b.hard{color:var(--h)}
-  .b.hosted{color:var(--nk)} .b.download{color:var(--a)} .b.either{color:var(--dim)}
-  .b.with_key{color:var(--k)} .b.without_key{color:var(--nk)}
-  .b.idea{color:var(--m)} .b.built{color:var(--dim)}
   .skills{color:var(--dim);font-size:12.5px}
   .btns{display:flex;gap:8px;margin-top:auto;flex-wrap:wrap}
-  button.act,a.act{background:var(--card2);color:var(--tx);border:1px solid var(--line);border-radius:8px;
-    padding:7px 11px;font-size:12.5px;cursor:pointer;text-decoration:none}
+  button.act,a.act{background:var(--card2);color:var(--tx);border:1px solid var(--line);border-radius:8px;padding:7px 11px;font-size:12.5px;cursor:pointer;text-decoration:none}
   button.act:hover,a.act:hover{border-color:var(--a)}
   .empty{grid-column:1/-1;color:var(--dim);text-align:center;padding:50px}
-  dialog{background:var(--card2);color:var(--tx);border:1px solid var(--line);border-radius:14px;
-    max-width:760px;width:92%;padding:0}
+  dialog{background:var(--card2);color:var(--tx);border:1px solid var(--line);border-radius:14px;max-width:760px;width:92%;padding:0}
   dialog::backdrop{background:rgba(4,6,9,.7)}
   .dh{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:16px 20px;border-bottom:1px solid var(--line);position:sticky;top:0;background:var(--card2)}
   .dh h2{margin:0;font-size:19px} .dbody{padding:8px 20px 20px}
@@ -40,19 +33,16 @@
   .dbody code{background:#0e1216;border:1px solid var(--line);border-radius:5px;padding:1px 5px;font-size:12.5px}
   .dbody ul,.dbody ol{margin:6px 0 6px 20px;padding:0} .dbody li{margin:2px 0}
   .x{background:0;border:0;color:var(--dim);font-size:24px;cursor:pointer;line-height:1}
-  .toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:var(--a);color:#0c0f12;
-    font-weight:700;padding:10px 16px;border-radius:10px;opacity:0;transition:opacity .2s;pointer-events:none}
+  .toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:var(--a);color:#0c0f12;font-weight:700;padding:10px 16px;border-radius:10px;opacity:0;transition:opacity .2s;pointer-events:none}
   .toast.on{opacity:1}
 </style></head>
 <body>
   <header><h1>CTF Challenge Catalog</h1><div class="count" id="count"></div></header>
   <div class="bar"><div class="row">
-    <input class="search" id="q" placeholder="search title / skills / slug…">
-    <select id="f-category"><option value="">category: any</option><option value="with_key">with_key</option><option value="without_key">without_key</option></select>
-    <select id="f-type"><option value="">type: any</option><option value="hosted">hosted</option><option value="download">download</option><option value="either">either</option></select>
-    <select id="f-diff"><option value="">difficulty: any</option><option value="easy">easy</option><option value="medium">medium</option><option value="hard">hard</option></select>
-    <select id="f-status"><option value="">status: any</option><option value="built">built</option><option value="idea">idea</option></select>
-    <select id="sort"><option value="difficulty">sort: difficulty</option><option value="title">sort: title</option><option value="box_type">sort: type</option><option value="category">sort: category</option></select>
+    <input class="search" id="q" placeholder="search title / skills…">
+    <select id="f-disc"><option value="">discipline: all</option></select>
+    <select id="f-diff"><option value="">difficulty: all</option><option value="easy">easy</option><option value="medium">medium</option><option value="hard">hard</option></select>
+    <select id="sort"><option value="discipline">sort: discipline</option><option value="difficulty">sort: difficulty</option><option value="title">sort: title</option></select>
   </div></div>
   <main id="grid"></main>
   <dialog id="modal"><div class="dh"><h2 id="m-title"></h2><button class="x" id="m-close">&times;</button></div>
@@ -63,8 +53,6 @@ const DIFF={easy:0,medium:1,hard:2};
 let DATA=[];
 const el=id=>document.getElementById(id);
 const esc=s=>String(s).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]));
-
-// tiny markdown -> html for the recipe body
 function md(t){
   const lines=t.split("\n"); let out=[],list=null;
   const inline=s=>esc(s).replace(/`([^`]+)`/g,"<code>$1</code>").replace(/\*\*([^*]+)\*\*/g,"<b>$1</b>");
@@ -80,53 +68,49 @@ function md(t){
   }
   closeList(); return out.join("\n");
 }
-
 function promptFor(r){
   return `Add this challenge to the CTF I'm building on the CTF blueprint, themed to `+
-`<DESCRIBE YOUR CTF'S STORY HERE>.\n`+
-`Use ONLY the mechanic below. Invent every name, filename, hostname, account and story `+
-`fresh for this CTF — never carry over any old name or code. Mint a fresh flag plus an `+
-`8-char prefix/postfix and place the flag and access key per the "What to plant" section `+
-`(different spots). Wire it as a normal blueprint challenge, then run challenge-tester.\n\n`+
-`--- RECIPE: ${r.title} (${r.box_type}, ${r.difficulty}, ${r.category}) ---\n${r.body}\n`;
+`<DESCRIBE YOUR CTF'S STORY HERE>.\nUse ONLY the mechanic below. Invent every name, filename, `+
+`hostname, account and story fresh for this CTF — never carry over any old name or code. Mint a `+
+`fresh flag plus an 8-char prefix/postfix and place the flag and access key per the "What to plant" `+
+`section (different spots). Wire it as a normal blueprint challenge, then run challenge-tester.\n\n`+
+`--- RECIPE: ${r.title} (${r.discipline}, ${r.difficulty}) ---\n${r.body}\n`;
 }
-
 function toast(msg){const t=el("toast");t.textContent=msg;t.classList.add("on");setTimeout(()=>t.classList.remove("on"),1400);}
 function copy(text,msg){navigator.clipboard.writeText(text).then(()=>toast(msg||"copied")).catch(()=>toast("copy failed"));}
-
 function openModal(r){
   el("m-title").textContent=r.title;
   el("m-body").innerHTML=
-    `<div class="badges" style="margin:10px 0">`+
-    `<span class="b ${r.category}">${r.category}</span><span class="b ${r.box_type}">${r.box_type}</span>`+
-    `<span class="b ${r.difficulty}">${r.difficulty}</span><span class="b ${r.status}">${r.status}</span></div>`+
-    `<div class="skills">${r.skills.map(esc).join(" · ")}</div>`+
-    md(r.body)+
+    `<div class="disc">${esc(r.discipline)}</div>`+
+    `<div class="badges" style="margin:8px 0"><span class="b ${r.difficulty}">${r.difficulty}</span>`+
+    `<span class="b">${r.box_type}</span><span class="b">${r.category}</span></div>`+
+    `<div class="skills">${(r.skills||[]).map(esc).join(" · ")}</div>`+md(r.body)+
     `<div class="btns" style="margin-top:16px">`+
     `<a class="act" href="../recipes/${r.slug}.md" download>Download .md</a>`+
     `<button class="act" id="mp">Copy reuse prompt</button></div>`;
   el("mp").onclick=()=>copy(promptFor(r),"prompt copied — paste into Claude in your CTF");
   el("modal").showModal();
 }
-
 function render(){
   const q=el("q").value.toLowerCase().trim();
-  const fc=el("f-category").value,ft=el("f-type").value,fd=el("f-diff").value,fs=el("f-status").value,sort=el("sort").value;
+  const fdi=el("f-disc").value, fd=el("f-diff").value, sort=el("sort").value;
   let rows=DATA.filter(r=>
-    (!fc||r.category===fc)&&(!ft||r.box_type===ft)&&(!fd||r.difficulty===fd)&&(!fs||r.status===fs)&&
-    (!q|| (r.title+" "+r.slug+" "+r.skills.join(" ")).toLowerCase().includes(q)));
-  rows.sort((a,b)=> sort==="difficulty" ? (DIFF[a.difficulty]-DIFF[b.difficulty]||a.title.localeCompare(b.title))
-    : String(a[sort]).localeCompare(String(b[sort]))||a.title.localeCompare(b.title));
+    (!fdi||r.discipline===fdi)&&(!fd||r.difficulty===fd)&&
+    (!q|| (r.title+" "+r.slug+" "+(r.skills||[]).join(" ")+" "+r.discipline).toLowerCase().includes(q)));
+  rows.sort((a,b)=>{
+    if(sort==="difficulty") return (DIFF[a.difficulty]-DIFF[b.difficulty])||a.title.localeCompare(b.title);
+    if(sort==="title") return a.title.localeCompare(b.title);
+    return a.discipline.localeCompare(b.discipline)||(DIFF[a.difficulty]-DIFF[b.difficulty])||a.title.localeCompare(b.title);
+  });
   el("count").textContent=`${rows.length} of ${DATA.length} recipes`;
   const g=el("grid");
   if(!rows.length){g.innerHTML="<div class='empty'>No recipes match.</div>";return;}
   g.innerHTML="";
   rows.forEach(r=>{
     const c=document.createElement("div");c.className="card";
-    c.innerHTML=`<div class="badges"><span class="b ${r.category}">${r.category==="with_key"?"flag + key":"flag only"}</span>`+
-      `<span class="b ${r.box_type}">${r.box_type}</span><span class="b ${r.difficulty}">${r.difficulty}</span>`+
-      (r.status==="idea"?`<span class="b idea">idea</span>`:"")+`</div>`+
-      `<h2>${esc(r.title)}</h2><div class="skills">${r.skills.map(esc).join(" · ")}</div>`+
+    c.innerHTML=`<div class="disc">${esc(r.discipline)}</div><h2>${esc(r.title)}</h2>`+
+      `<div class="badges"><span class="b ${r.difficulty}">${r.difficulty}</span><span class="b">${r.box_type}</span></div>`+
+      `<div class="skills">${(r.skills||[]).map(esc).join(" · ")}</div>`+
       `<div class="btns"><button class="act view">View</button>`+
       `<a class="act" href="../recipes/${r.slug}.md" download>.md</a>`+
       `<button class="act cp">Copy prompt</button></div>`;
@@ -135,11 +119,14 @@ function render(){
     g.appendChild(c);
   });
 }
-
-["q","f-category","f-type","f-diff","f-status","sort"].forEach(id=>el(id).addEventListener("input",render));
+["q","f-disc","f-diff","sort"].forEach(id=>el(id).addEventListener("input",render));
 el("m-close").onclick=()=>el("modal").close();
 el("modal").addEventListener("click",e=>{if(e.target===el("modal"))el("modal").close();});
-fetch("recipes.json").then(r=>r.json()).then(d=>{DATA=d;render();})
-  .catch(()=>el("grid").innerHTML="<div class='empty'>recipes.json not found — run ./serve.sh</div>");
+fetch("recipes.json").then(r=>r.json()).then(d=>{
+  DATA=d;
+  const discs=[...new Set(d.map(r=>r.discipline).filter(Boolean))].sort();
+  const sel=el("f-disc"); discs.forEach(x=>{const o=document.createElement("option");o.value=x;o.textContent=x;sel.appendChild(o);});
+  render();
+}).catch(()=>el("grid").innerHTML="<div class='empty'>recipes.json not found — run ./serve.sh</div>");
 </script>
 </body></html>

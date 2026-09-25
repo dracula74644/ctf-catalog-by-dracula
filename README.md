@@ -19,8 +19,9 @@ recipes/             one file per challenge recipe
 ```
 ./serve.sh            # then open http://localhost:8099/web/
 ```
-A local, offline web viewer: every recipe as a card, filter by category / type /
-difficulty / status, search by title or skills, and per recipe **View**,
+A local, offline web viewer: every recipe as a card, browsed mainly by **discipline**
+(Web Exploitation, Reverse Engineering, Forensics, Cryptography, Privilege Escalation, …)
+and **difficulty** (easy/medium/hard), search by title or skills, and per recipe **View**,
 **Download .md**, and **Copy reuse prompt** (a ready-to-paste prompt with the full
 mechanic embedded — paste it into Claude in any CTF to build that challenge). It
 reads your recipe files directly, so it is always current; `serve.sh` regenerates the
@@ -54,6 +55,9 @@ nothing to copy but the technique. Reimplement from the technical description.
   that's a *skin point*, not part of the mechanic.
 
 ## Field notes
+- **discipline** and **difficulty** are the primary axes you browse and sort by
+  (e.g. Web Exploitation / Forensics / Reverse Engineering, then easy/medium/hard).
+  `box_type` and `category` are wiring info shown as badges, not filters.
 - **box_type** maps to the blueprint: `hosted` (a service on a port) or `download`
   (a file the portal serves). `either` = works both ways.
 - **category** is `with_key` (flag + rotating access key) or `without_key` (flag only).

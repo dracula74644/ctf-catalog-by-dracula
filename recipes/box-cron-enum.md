@@ -1,6 +1,7 @@
 ---
 slug: box-cron-enum
 title: Info disclosure via cron/log enumeration
+discipline: Recon
 skills: box, enumeration, linux
 difficulty: easy
 box_type: hosted

@@ -1,6 +1,7 @@
 ---
 slug: forensics-pcap-creds
 title: Recover cleartext credentials from a packet capture
+discipline: Forensics
 skills: forensics, pcap, network
 difficulty: easy
 box_type: download

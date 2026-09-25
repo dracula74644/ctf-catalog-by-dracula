@@ -1,6 +1,7 @@
 ---
 slug: web-backup-leak-recon
 title: Exposed backup file leaks credentials/scheme
+discipline: Recon
 skills: web, recon, information-disclosure
 difficulty: easy
 box_type: hosted

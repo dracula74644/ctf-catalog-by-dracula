@@ -1,6 +1,7 @@
 ---
 slug: web-idor-enumeration
 title: IDOR: enumerate object IDs to reach internal records
+discipline: Web Exploitation
 skills: web, idor, access-control
 difficulty: easy
 box_type: hosted

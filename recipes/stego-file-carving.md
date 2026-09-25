@@ -1,6 +1,7 @@
 ---
 slug: stego-file-carving
 title: Data appended/hidden inside an image (carving)
+discipline: Forensics
 skills: stego, forensics, carving
 difficulty: easy
 box_type: download

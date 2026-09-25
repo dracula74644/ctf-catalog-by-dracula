@@ -1,6 +1,7 @@
 ---
 slug: forensics-pcap-carve
 title: Carve an exfiltrated file out of a capture
+discipline: Forensics
 skills: forensics, pcap, file-carving
 difficulty: medium
 box_type: download

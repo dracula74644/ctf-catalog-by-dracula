@@ -1,6 +1,7 @@
 ---
 slug: kebab-case-unique-id
 title: One-line name of the challenge
+discipline: Web Exploitation | Reverse Engineering | Forensics | Cryptography | Binary Exploitation | Privilege Escalation | Password Attacks | Recon | Enumeration | Stego | ...
 skills: comma, separated, tags
 difficulty: easy | medium | hard
 box_type: hosted | download | either
