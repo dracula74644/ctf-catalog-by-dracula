@@ -101,8 +101,10 @@
       var self=this;
       container.querySelectorAll(".box").forEach(function(box){
         var r=self.byslug(box.dataset.slug); if(!r)return;
-        var v=box.querySelector(".view"); if(v)v.onclick=function(){openModal(r);};
-        var cp=box.querySelector(".cp"); if(cp)cp.onclick=function(){copy(promptFor(r),"prompt copied");};
+        box.style.cursor="pointer";
+        box.onclick=function(e){ if(e.target.closest(".act")) return; openModal(r); }; // click card = View (buttons/links still act on their own)
+        var v=box.querySelector(".view"); if(v)v.onclick=function(e){e.stopPropagation();openModal(r);};
+        var cp=box.querySelector(".cp"); if(cp)cp.onclick=function(e){e.stopPropagation();copy(promptFor(r),"prompt copied");};
       });
     }
   };
