@@ -2,6 +2,7 @@
 slug: box-cron-enum
 title: Find secrets left behind by a scheduled job
 category: Exploitation
+source_ctf: Deep Access
 skills: box, enumeration, linux
 difficulty: easy
 box_type: hosted

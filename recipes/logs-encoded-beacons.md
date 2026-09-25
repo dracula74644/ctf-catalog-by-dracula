@@ -2,6 +2,7 @@
 slug: logs-encoded-beacons
 title: Decode a hidden message buried in the logs
 category: Digital Forensics
+source_ctf: First Shift
 skills: log-analysis, encoding, forensics
 difficulty: medium
 box_type: hosted

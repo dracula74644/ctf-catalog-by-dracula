@@ -2,6 +2,7 @@
 slug: web-idor-enumeration
 title: See other people's records by changing the ID
 category: Web Application Security
+source_ctf: Deep Access
 skills: web, idor, access-control
 difficulty: easy
 box_type: hosted

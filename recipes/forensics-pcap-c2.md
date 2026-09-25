@@ -2,6 +2,7 @@
 slug: forensics-pcap-c2
 title: Spot the malware phone-home in captured traffic
 category: Network Security
+source_ctf: Breach Response
 skills: forensics, pcap, c2, network
 difficulty: medium
 box_type: download

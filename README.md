@@ -63,6 +63,8 @@ nothing to copy but the technique. Reimplement from the technical description.
   what the player does (e.g. "Log in as admin using SQL injection").
 - **box_type** maps to the blueprint: `hosted` (a service on a port) or `download`
   (a file the portal serves). `either` = works both ways.
-- **category** is `with_key` (flag + rotating access key) or `without_key` (flag only).
+- **source_ctf** is the title of the CTF a recipe came from, shown on the card as
+  provenance only. It is NOT part of the mechanic and is never included when you
+  reuse the recipe — the mechanic stays theme-agnostic.
 - **status** `idea` = a recipe you want to build but haven't yet; write the mechanic
   now, flesh it out when you use it.

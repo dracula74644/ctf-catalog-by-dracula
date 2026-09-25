@@ -2,6 +2,7 @@
 slug: web-backup-leak-recon
 title: Find secrets in a leaked website backup file
 category: Web Application Security
+source_ctf: Deep Access
 skills: web, recon, information-disclosure
 difficulty: easy
 box_type: hosted

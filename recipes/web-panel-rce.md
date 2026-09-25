@@ -2,6 +2,7 @@
 slug: web-panel-rce
 title: Run commands through an outdated admin panel
 category: Web Application Security
+source_ctf: Breach Response
 skills: web, rce, command-injection
 difficulty: hard
 box_type: hosted

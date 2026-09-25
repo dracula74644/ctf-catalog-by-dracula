@@ -2,6 +2,7 @@
 slug: crypto-vault-decrypt
 title: Unlock an encrypted file one layer at a time
 category: Cryptography
+source_ctf: First Shift
 skills: crypto, openssl
 difficulty: medium
 box_type: download

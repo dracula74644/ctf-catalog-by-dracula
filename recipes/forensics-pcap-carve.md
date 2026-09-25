@@ -2,6 +2,7 @@
 slug: forensics-pcap-carve
 title: Pull a stolen file out of captured traffic
 category: Network Security
+source_ctf: Breach Response
 skills: forensics, pcap, file-carving
 difficulty: medium
 box_type: download

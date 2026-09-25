@@ -2,6 +2,7 @@
 slug: box-suid-privesc
 title: Become root using a vulnerable setuid program
 category: Exploitation
+source_ctf: Deep Access
 skills: box, privesc, linux
 difficulty: medium
 box_type: hosted

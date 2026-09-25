@@ -2,6 +2,7 @@
 slug: web-lfi-file-read
 title: Read hidden server files through the website
 category: Web Application Security
+source_ctf: Breach Response
 skills: web, lfi, path-traversal
 difficulty: medium
 box_type: hosted

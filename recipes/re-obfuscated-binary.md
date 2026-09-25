@@ -2,6 +2,7 @@
 slug: re-obfuscated-binary
 title: Reverse a scrambled program to find its secret
 category: Reverse Engineering
+source_ctf: First Shift
 skills: reverse-engineering, binary
 difficulty: hard
 box_type: download

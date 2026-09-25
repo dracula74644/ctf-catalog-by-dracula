@@ -2,6 +2,7 @@
 slug: forensics-pcap-creds
 title: Find the login password in captured traffic
 category: Network Security
+source_ctf: Breach Response
 skills: forensics, pcap, network
 difficulty: easy
 box_type: download

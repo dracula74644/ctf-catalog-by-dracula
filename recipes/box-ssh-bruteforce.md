@@ -2,6 +2,7 @@
 slug: box-ssh-bruteforce
 title: Guess the SSH password to get onto the box
 category: Exploitation
+source_ctf: Deep Access
 skills: box, brute-force, passwords
 difficulty: medium
 box_type: hosted

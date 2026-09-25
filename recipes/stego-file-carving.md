@@ -2,6 +2,7 @@
 slug: stego-file-carving
 title: Find a file hidden inside a picture
 category: Digital Forensics
+source_ctf: First Shift
 skills: stego, forensics, carving
 difficulty: easy
 box_type: download
