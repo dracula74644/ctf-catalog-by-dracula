@@ -3,83 +3,115 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>CTF Challenge Catalog</title>
 <style>
-  :root{--bg:#0f1216;--card:#171c22;--card2:#1c232b;--line:#28313b;--tx:#e8eef4;--dim:#93a1b0;
-        --a:#5db2a6;--e:#7ec07a;--m:#e0b25a;--h:#e07a7a}
+  :root{
+    --bg:#0b0e12; --side:#0f141a; --card:#151b22; --card2:#1b232c; --line:#232d38;
+    --tx:#eaf0f6; --dim:#8fa0b0; --a:#4fd1c5; --a2:#2b3a44;
+    --e:#7ec07a; --m:#e6b45a; --h:#e07a7a;
+  }
   *{box-sizing:border-box}
-  body{margin:0;background:var(--bg);color:var(--tx);font:15px/1.55 system-ui,Segoe UI,Roboto,Arial,sans-serif}
-  header{padding:26px 24px 8px;max-width:1200px;margin:0 auto}
-  h1{margin:0;font-size:24px} .count{color:var(--dim);font-size:13px}
-  .bar{position:sticky;top:0;background:var(--bg);border-bottom:1px solid var(--line);padding:12px 24px;z-index:5}
-  .bar .row{max-width:1200px;margin:0 auto;display:flex;gap:10px;flex-wrap:wrap;align-items:center}
-  select{background:var(--card2);color:var(--tx);border:1px solid var(--line);border-radius:8px;padding:8px 10px;font-size:13.5px}
-  main{max-width:1200px;margin:0 auto;padding:18px 24px 60px;display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:14px}
-  .card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px;display:flex;flex-direction:column;gap:10px}
-  .card h2{margin:0;font-size:16.5px}
-  .cat{font-size:12px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:var(--a)}
-  .badges{display:flex;gap:6px;flex-wrap:wrap}
-  .b{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.3px;padding:2px 8px;border-radius:999px;border:1px solid var(--line);color:var(--dim)}
-  .b.easy{color:var(--e)} .b.medium{color:var(--m)} .b.hard{color:var(--h)}
-  .skills{color:var(--dim);font-size:12.5px}
+  html,body{height:100%}
+  body{margin:0;background:var(--bg);color:var(--tx);
+    font:15px/1.5 system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+    display:grid;grid-template-columns:250px 1fr;grid-template-rows:100vh;overflow:hidden}
+
+  /* ---- left rail : Category filter ---- */
+  aside{background:var(--side);border-right:1px solid var(--line);height:100vh;overflow-y:auto;
+    display:flex;flex-direction:column}
+  .brand{padding:20px 20px 14px;font-size:17px;font-weight:800;letter-spacing:.3px;
+    border-bottom:1px solid var(--line);position:sticky;top:0;background:var(--side)}
+  .brand small{display:block;color:var(--dim);font-weight:500;font-size:12px;letter-spacing:0;margin-top:3px}
+  nav{padding:10px 10px 24px}
+  .navlbl{color:var(--dim);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;padding:12px 10px 6px}
+  .cat{display:flex;justify-content:space-between;align-items:center;gap:8px;width:100%;text-align:left;
+    background:0;border:0;color:var(--tx);padding:9px 12px;border-radius:9px;cursor:pointer;font-size:13.5px}
+  .cat:hover{background:var(--card)}
+  .cat.on{background:var(--a2);color:#fff;font-weight:600}
+  .cat .n{color:var(--dim);font-size:11.5px}
+  .cat.on .n{color:var(--a)}
+
+  /* ---- main ---- */
+  main{height:100vh;overflow-y:auto;display:flex;flex-direction:column}
+  .top{position:sticky;top:0;background:rgba(11,14,18,.92);backdrop-filter:blur(6px);
+    border-bottom:1px solid var(--line);padding:16px 24px;display:flex;align-items:center;gap:16px;flex-wrap:wrap;z-index:4}
+  .top h1{margin:0;font-size:17px;font-weight:700;margin-right:auto}
+  .pills{display:flex;gap:6px}
+  .pill{background:var(--card);border:1px solid var(--line);color:var(--dim);border-radius:999px;
+    padding:6px 13px;font-size:12.5px;cursor:pointer;font-weight:600}
+  .pill:hover{border-color:var(--a)} .pill.on{background:var(--a);color:#08120f;border-color:var(--a)}
+  .count{color:var(--dim);font-size:12.5px}
+
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px;padding:18px 24px 40px}
+  .box{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;display:flex;flex-direction:column;gap:9px;min-height:150px}
+  .box:hover{border-color:var(--a2)}
+  .cattag{font-size:11px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:var(--a)}
+  .box h2{margin:0;font-size:16px;line-height:1.3}
+  .b{display:inline-block;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.3px;padding:2px 9px;border-radius:999px;border:1px solid var(--line);color:var(--dim)}
+  .b.easy{color:var(--e);border-color:#2c3a2c}.b.medium{color:var(--m);border-color:#3a3324}.b.hard{color:var(--h);border-color:#3a2727}
+  .skills{color:var(--dim);font-size:12px}
   .btns{display:flex;gap:8px;margin-top:auto;flex-wrap:wrap}
-  button.act,a.act{background:var(--card2);color:var(--tx);border:1px solid var(--line);border-radius:8px;padding:7px 11px;font-size:12.5px;cursor:pointer;text-decoration:none}
-  button.act:hover,a.act:hover{border-color:var(--a)}
-  .empty{grid-column:1/-1;color:var(--dim);text-align:center;padding:50px}
-  dialog{background:var(--card2);color:var(--tx);border:1px solid var(--line);border-radius:14px;max-width:760px;width:92%;padding:0}
-  dialog::backdrop{background:rgba(4,6,9,.7)}
-  .dh{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:16px 20px;border-bottom:1px solid var(--line);position:sticky;top:0;background:var(--card2)}
-  .dh h2{margin:0;font-size:19px} .dbody{padding:8px 20px 20px}
-  .dbody h2{font-size:15px;color:var(--a);margin:18px 0 6px} .dbody h3{font-size:14px;margin:14px 0 4px}
+  .act{background:var(--card2);color:var(--tx);border:1px solid var(--line);border-radius:8px;padding:7px 12px;font-size:12.5px;cursor:pointer;text-decoration:none}
+  .act:hover{border-color:var(--a)}
+  .empty{grid-column:1/-1;color:var(--dim);text-align:center;padding:70px 20px}
+
+  dialog{background:var(--card2);color:var(--tx);border:1px solid var(--line);border-radius:16px;max-width:780px;width:92%;padding:0}
+  dialog::backdrop{background:rgba(4,6,9,.72)}
+  .dh{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:18px 22px;border-bottom:1px solid var(--line);position:sticky;top:0;background:var(--card2)}
+  .dh h2{margin:0;font-size:20px}
+  .dbody{padding:10px 22px 22px}
+  .dbody h2{font-size:15px;color:var(--a);margin:18px 0 6px}.dbody h3{font-size:14px;margin:14px 0 4px}
   .dbody code{background:#0e1216;border:1px solid var(--line);border-radius:5px;padding:1px 5px;font-size:12.5px}
-  .dbody ul,.dbody ol{margin:6px 0 6px 20px;padding:0} .dbody li{margin:2px 0}
-  .x{background:0;border:0;color:var(--dim);font-size:24px;cursor:pointer;line-height:1}
-  .toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:var(--a);color:#0c0f12;font-weight:700;padding:10px 16px;border-radius:10px;opacity:0;transition:opacity .2s;pointer-events:none}
+  .dbody ul,.dbody ol{margin:6px 0 6px 20px;padding:0}.dbody li{margin:2px 0}
+  .x{background:0;border:0;color:var(--dim);font-size:26px;cursor:pointer;line-height:1}
+  .toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%);background:var(--a);color:#08120f;font-weight:700;padding:11px 18px;border-radius:10px;opacity:0;transition:opacity .2s;pointer-events:none;z-index:20}
   .toast.on{opacity:1}
+
+  /* ---- phone: rail becomes a top strip ---- */
+  @media (max-width:820px){
+    body{grid-template-columns:1fr;grid-template-rows:auto 1fr;overflow:auto}
+    aside{height:auto;border-right:0;border-bottom:1px solid var(--line)}
+    .brand{position:static}
+    nav{display:flex;gap:6px;overflow-x:auto;padding:10px 12px}
+    .navlbl{display:none} .cat{width:auto;white-space:nowrap} .cat .n{display:none}
+    main{height:auto;overflow:visible}
+  }
 </style></head>
 <body>
-  <header><h1>CTF Challenge Catalog</h1><div class="count" id="count"></div></header>
-  <div class="bar"><div class="row">
-    <select id="f-cat">
-      <option value="">Category: all</option>
-      <option>Reverse Engineering</option>
-      <option>Mobile Security</option>
-      <option>Digital Forensics</option>
-      <option>Web Application Security</option>
-      <option>Cryptography</option>
-      <option>Network Security</option>
-      <option>Secure Coding</option>
-      <option>Exploitation</option>
-      <option>AI/ML</option>
-    </select>
-    <select id="f-diff">
-      <option value="">Difficulty: all</option>
-      <option value="easy">easy</option>
-      <option value="medium">medium</option>
-      <option value="hard">hard</option>
-    </select>
-  </div></div>
-  <main id="grid"></main>
+  <aside>
+    <div class="brand">CTF Catalog<small>reusable challenge recipes</small></div>
+    <nav id="cats"><div class="navlbl">Category</div></nav>
+  </aside>
+  <main>
+    <div class="top">
+      <h1 id="heading">All challenges</h1>
+      <div class="pills" id="diffs"></div>
+      <div class="count" id="count"></div>
+    </div>
+    <div class="grid" id="grid"></div>
+  </main>
   <dialog id="modal"><div class="dh"><h2 id="m-title"></h2><button class="x" id="m-close">&times;</button></div>
     <div class="dbody" id="m-body"></div></dialog>
   <div class="toast" id="toast"></div>
 <script>
-const DIFF={easy:0,medium:1,hard:2};
-let DATA=[];
+const CATS=["Reverse Engineering","Mobile Security","Digital Forensics","Web Application Security",
+  "Cryptography","Network Security","Secure Coding","Exploitation","AI/ML"];
+const DIFFS=["easy","medium","hard"], DORD={easy:0,medium:1,hard:2};
+let DATA=[], selCat="", selDiff="";
 const el=id=>document.getElementById(id);
 const esc=s=>String(s).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]));
 function md(t){
-  const lines=t.split("\n"); let out=[],list=null;
+  const lines=t.split("\n");let out=[],list=null;
   const inline=s=>esc(s).replace(/`([^`]+)`/g,"<code>$1</code>").replace(/\*\*([^*]+)\*\*/g,"<b>$1</b>");
-  const closeList=()=>{ if(list){out.push(list==="ul"?"</ul>":"</ol>");list=null;} };
+  const cl=()=>{if(list){out.push(list==="ul"?"</ul>":"</ol>");list=null;}};
   for(let ln of lines){
-    if(/^## /.test(ln)){closeList();out.push("<h2>"+inline(ln.slice(3))+"</h2>");continue;}
-    if(/^### /.test(ln)){closeList();out.push("<h3>"+inline(ln.slice(4))+"</h3>");continue;}
+    if(/^## /.test(ln)){cl();out.push("<h2>"+inline(ln.slice(3))+"</h2>");continue;}
+    if(/^### /.test(ln)){cl();out.push("<h3>"+inline(ln.slice(4))+"</h3>");continue;}
     let m;
-    if(m=ln.match(/^\s*[-*]\s+(.*)/)){ if(list!=="ul"){closeList();out.push("<ul>");list="ul";} out.push("<li>"+inline(m[1])+"</li>");continue;}
-    if(m=ln.match(/^\s*\d+\.\s+(.*)/)){ if(list!=="ol"){closeList();out.push("<ol>");list="ol";} out.push("<li>"+inline(m[1])+"</li>");continue;}
-    if(ln.trim()===""){closeList();continue;}
-    closeList(); out.push("<p>"+inline(ln)+"</p>");
+    if(m=ln.match(/^\s*[-*]\s+(.*)/)){if(list!=="ul"){cl();out.push("<ul>");list="ul";}out.push("<li>"+inline(m[1])+"</li>");continue;}
+    if(m=ln.match(/^\s*\d+\.\s+(.*)/)){if(list!=="ol"){cl();out.push("<ol>");list="ol";}out.push("<li>"+inline(m[1])+"</li>");continue;}
+    if(ln.trim()===""){cl();continue;}
+    cl();out.push("<p>"+inline(ln)+"</p>");
   }
-  closeList(); return out.join("\n");
+  cl();return out.join("\n");
 }
 function promptFor(r){
   return `Add this challenge to the CTF I'm building on the CTF blueprint, themed to `+
@@ -93,30 +125,42 @@ function toast(msg){const t=el("toast");t.textContent=msg;t.classList.add("on");
 function copy(text,msg){navigator.clipboard.writeText(text).then(()=>toast(msg||"copied")).catch(()=>toast("copy failed"));}
 function openModal(r){
   el("m-title").textContent=r.title;
-  el("m-body").innerHTML=
-    `<div class="cat">${esc(r.category)}</div>`+
-    `<div class="badges" style="margin:8px 0"><span class="b ${r.difficulty}">${r.difficulty}</span>`+
-    `<span class="b">${r.box_type}</span></div>`+
+  el("m-body").innerHTML=`<div class="cattag">${esc(r.category)}</div>`+
+    `<div style="margin:8px 0"><span class="b ${r.difficulty}">${r.difficulty}</span> <span class="b">${r.box_type}</span></div>`+
     `<div class="skills">${(r.skills||[]).map(esc).join(" · ")}</div>`+md(r.body)+
-    `<div class="btns" style="margin-top:16px">`+
-    `<a class="act" href="../recipes/${r.slug}.md" download>Download .md</a>`+
+    `<div class="btns" style="margin-top:16px"><a class="act" href="../recipes/${r.slug}.md" download>Download .md</a>`+
     `<button class="act" id="mp">Copy reuse prompt</button></div>`;
   el("mp").onclick=()=>copy(promptFor(r),"prompt copied — paste into Claude in your CTF");
   el("modal").showModal();
 }
+function counts(){const c={}; DATA.forEach(r=>c[r.category]=(c[r.category]||0)+1); return c;}
+function buildRail(){
+  const c=counts(), nav=el("cats");
+  const mk=(name,label,n)=>`<button class="cat${selCat===name?' on':''}" data-cat="${esc(name)}">`+
+    `<span>${esc(label)}</span><span class="n">${n}</span></button>`;
+  let h=`<div class="navlbl">Category</div>`+mk("","All",DATA.length);
+  CATS.forEach(x=>{ if(c[x]) h+=mk(x,x,c[x]); });         // only categories that have recipes
+  nav.innerHTML=h;
+  nav.querySelectorAll(".cat").forEach(b=>b.onclick=()=>{selCat=b.dataset.cat;buildRail();render();});
+}
+function buildPills(){
+  const p=el("diffs");
+  const mk=(v,l)=>`<button class="pill${selDiff===v?' on':''}" data-d="${v}">${l}</button>`;
+  p.innerHTML=mk("","All")+DIFFS.map(d=>mk(d,d)).join("");
+  p.querySelectorAll(".pill").forEach(b=>b.onclick=()=>{selDiff=b.dataset.d;buildPills();render();});
+}
 function render(){
-  const fc=el("f-cat").value, fd=el("f-diff").value;
-  let rows=DATA.filter(r=>(!fc||r.category===fc)&&(!fd||r.difficulty===fd));
-  rows.sort((a,b)=> (a.category||"").localeCompare(b.category||"")
-    || (DIFF[a.difficulty]-DIFF[b.difficulty]) || a.title.localeCompare(b.title));
-  el("count").textContent=`${rows.length} of ${DATA.length} recipes`;
+  el("heading").textContent=selCat||"All challenges";
+  let rows=DATA.filter(r=>(!selCat||r.category===selCat)&&(!selDiff||r.difficulty===selDiff));
+  rows.sort((a,b)=>(a.category||"").localeCompare(b.category||"")||(DORD[a.difficulty]-DORD[b.difficulty])||a.title.localeCompare(b.title));
+  el("count").textContent=`${rows.length} recipe${rows.length===1?"":"s"}`;
   const g=el("grid");
-  if(!rows.length){g.innerHTML="<div class='empty'>No recipes in this category / difficulty yet.</div>";return;}
+  if(!rows.length){g.innerHTML="<div class='empty'>No recipes here yet.</div>";return;}
   g.innerHTML="";
   rows.forEach(r=>{
-    const c=document.createElement("div");c.className="card";
-    c.innerHTML=`<div class="cat">${esc(r.category)}</div><h2>${esc(r.title)}</h2>`+
-      `<div class="badges"><span class="b ${r.difficulty}">${r.difficulty}</span></div>`+
+    const c=document.createElement("div");c.className="box";
+    c.innerHTML=`<div class="cattag">${esc(r.category)}</div><h2>${esc(r.title)}</h2>`+
+      `<div><span class="b ${r.difficulty}">${r.difficulty}</span></div>`+
       `<div class="skills">${(r.skills||[]).map(esc).join(" · ")}</div>`+
       `<div class="btns"><button class="act view">View</button>`+
       `<a class="act" href="../recipes/${r.slug}.md" download>.md</a>`+
@@ -126,10 +170,9 @@ function render(){
     g.appendChild(c);
   });
 }
-["f-cat","f-diff"].forEach(id=>el(id).addEventListener("change",render));
 el("m-close").onclick=()=>el("modal").close();
 el("modal").addEventListener("click",e=>{if(e.target===el("modal"))el("modal").close();});
-fetch("recipes.json").then(r=>r.json()).then(d=>{DATA=d;render();})
+fetch("recipes.json").then(r=>r.json()).then(d=>{DATA=d;buildRail();buildPills();render();})
   .catch(()=>el("grid").innerHTML="<div class='empty'>recipes.json not found — run ./serve.sh</div>");
 </script>
 </body></html>
