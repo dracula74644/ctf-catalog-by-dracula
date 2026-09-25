@@ -10,6 +10,8 @@
  select{background:var(--card);color:var(--tx);border:1px solid var(--line);border-radius:10px;padding:8px 12px;font-size:13px}
  select:focus{outline:0;border-color:var(--purple);box-shadow:0 0 0 3px rgba(189,147,249,.25)}
  .pill{background:var(--card);border:1px solid var(--line);color:var(--dim);border-radius:999px;padding:6px 14px;font-size:12.5px;cursor:pointer;font-weight:600}.pill.on{background:var(--purple);color:#282a36;border-color:var(--purple)}
+ .addbtn{background:var(--green);color:#282a36;border:0;border-radius:9px;padding:8px 15px;font-weight:700;font-size:13px;cursor:pointer;transition:.15s}
+ .addbtn:hover{background:var(--cyan)}
  .count{color:var(--comment);font-size:12.5px}
  main{overflow-y:auto;flex:1}
  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:18px;padding:22px 28px 46px}
@@ -28,7 +30,7 @@
 </style></head>
 <body>
  <div class="bar"><h1><b>#</b> CTF Catalog <i>By Dracula</i></h1>
-  <select id="cat"></select><select id="ctf"></select><span id="diffs"></span><span class="count" id="count"></span></div>
+  <select id="cat"></select><select id="ctf"></select><span id="diffs"></span><span class="count" id="count"></span><button id="addbtn" class="addbtn">+ Add recipe</button></div>
  <main><div class="grid" id="grid"></div></main>
 <script>
  window.onCatalog=function(d){
@@ -39,4 +41,5 @@
   dm.querySelectorAll(".pill").forEach(function(b){b.onclick=function(){CATALOG.set("diff",b.dataset.d);dm.querySelectorAll(".pill").forEach(function(p){p.classList.toggle("on",p.dataset.d===b.dataset.d);});};});
  };
  window.paint=function(rows){document.getElementById("count").textContent=rows.length+" recipes";var g=document.getElementById("grid");g.innerHTML=rows.length?rows.map(function(r){return CATALOG.cardHTML(r);}).join(""):"<div class='empty'>No recipes here.</div>";CATALOG.wire(g);};
+ document.getElementById("addbtn").onclick=function(){CATALOG.addRecipeModal();};
 </script><script src="core.js"></script></body></html>

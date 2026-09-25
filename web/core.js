@@ -106,6 +106,50 @@
         var v=box.querySelector(".view"); if(v)v.onclick=function(e){e.stopPropagation();openModal(r);};
         var cp=box.querySelector(".cp"); if(cp)cp.onclick=function(e){e.stopPropagation();copy(promptFor(r),"prompt copied");};
       });
+    },
+    addRecipeModal:function(){
+      var m=this._addm;
+      if(!m){
+        m=document.createElement("dialog"); this._addm=m;
+        m.style.cssText="max-width:720px;width:92%;border:1px solid #44475a;border-radius:16px;background:#343746;color:#f8f8f2;padding:0";
+        var box="background:#282a36;padding:1px 5px;border-radius:4px;font-family:ui-monospace,monospace;font-size:12px";
+        m.innerHTML=
+          '<div style="display:flex;justify-content:space-between;align-items:center;padding:16px 20px;border-bottom:1px solid #44475a;position:sticky;top:0;background:#343746">'+
+          '<h2 style="margin:0;font-size:19px">Add a recipe</h2><button id="ar-x" style="background:0;border:0;color:#a4abd0;font-size:26px;cursor:pointer">&times;</button></div>'+
+          '<div style="padding:14px 20px 22px">'+
+          '<h3 style="margin:6px 0 6px;color:#bd93f9;font-size:14px">From a CTF &mdash; by prompt (adds every challenge)</h3>'+
+          '<p style="margin:0 0 8px;color:#a4abd0;font-size:13.5px">Paste this into Claude Code inside any CTF folder built on the blueprint. It writes a theme-agnostic recipe for each challenge into this catalog and regenerates it &mdash; refresh this page after.</p>'+
+          '<textarea id="ar-p" readonly style="width:100%;height:220px;background:#282a36;color:#f8f8f2;border:1px solid #44475a;border-radius:10px;padding:12px;font:12.5px/1.5 ui-monospace,monospace;resize:vertical"></textarea>'+
+          '<div style="margin:8px 0 20px"><button id="ar-copy" style="background:#bd93f9;color:#282a36;border:0;border-radius:9px;padding:9px 16px;font-weight:700;cursor:pointer">Copy prompt</button></div>'+
+          '<h3 style="margin:6px 0 6px;color:#ff79c6;font-size:14px">By .md file</h3>'+
+          '<p style="margin:0;color:#a4abd0;font-size:13.5px">Save your recipe as <code style="'+box+'">~/Documents/ctf-catalog/recipes/&lt;slug&gt;.md</code> (use <code style="'+box+'">RECIPE-TEMPLATE.md</code> as the shape), then re-run <code style="'+box+'">./serve.sh</code> and refresh &mdash; the catalog rebuilds from the .md files.</p>'+
+          '</div>';
+        document.body.appendChild(m);
+        var PROMPT=[
+          "I'm in a CTF folder built on our CTF blueprint. Add a catalog recipe for EVERY challenge",
+          "in this CTF to my challenge catalog at ~/Documents/ctf-catalog.","",
+          "For each enabled challenge under challenges/:",
+          "- Write a THEME-AGNOSTIC recipe: the reusable MECHANIC only — no names, story, filenames,",
+          "  or code from this CTF.",
+          "- Use the catalog format. Frontmatter: slug; title (plain words — what the player does);",
+          "  category (EXACTLY one of: Reverse Engineering, Mobile Security, Digital Forensics,",
+          "  Web Application Security, Cryptography, Network Security, Secure Coding, Exploitation, AI/ML);",
+          "  source_ctf (this CTF's title from ctf.conf CTF_NAME); difficulty (easy|medium|hard);",
+          "  skills; box_type (hosted|download); status: built. Then sections: Mechanic, Player solve",
+          "  path, What to plant, Skin points, Blueprint mapping.",
+          "- If the challenge folder already has recipe.md, use it; otherwise derive it from the challenge.",
+          "- Save each as ~/Documents/ctf-catalog/recipes/<slug>.md (ask before overwriting a different",
+          "  existing recipe).","",
+          "Then regenerate the catalog:",
+          "  cd ~/Documents/ctf-catalog && python3 gen-index.py && python3 web/gen.py","",
+          "Report which recipes you added."
+        ].join("\n");
+        m.querySelector("#ar-p").value=PROMPT;
+        m.querySelector("#ar-x").onclick=function(){m.close();};
+        m.addEventListener("click",function(e){if(e.target===m)m.close();});
+        m.querySelector("#ar-copy").onclick=function(){copy(PROMPT,"prompt copied — paste into Claude Code in a CTF folder");};
+      }
+      m.showModal();
     }
   };
   function repaint(){ if(window.paint) window.paint(CATALOG.filtered()); }
