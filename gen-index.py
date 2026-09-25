@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Regenerate index.md from recipe frontmatter, organised by discipline + difficulty."""
+"""Regenerate index.md from recipe frontmatter, organised by category + difficulty."""
 import glob, os, re
 root=os.path.dirname(os.path.abspath(__file__))
 rows=[]
@@ -11,15 +11,14 @@ for f in sorted(glob.glob(os.path.join(root,"recipes","*.md"))):
                 k,_,v=line.partition(":"); fm[k.strip()]=v.strip()
     rows.append(fm)
 order={"easy":0,"medium":1,"hard":2}
-rows.sort(key=lambda r:(r.get("discipline",""), order.get(r.get("difficulty",""),9), r.get("slug","")))
+rows.sort(key=lambda r:(r.get("category",""), order.get(r.get("difficulty",""),9), r.get("title","")))
 out=["# Catalog index","",
-     f"{len(rows)} recipe(s), browsed by **discipline** and **difficulty**. Add one with "
+     f"{len(rows)} recipe(s), browsed by **category** and **difficulty**. Add one with "
      "RECIPE-TEMPLATE.md, then re-run `python3 gen-index.py`.","",
-     "| discipline | difficulty | title | skills | type |",
-     "|------------|------------|-------|--------|------|"]
+     "| category | difficulty | title |",
+     "|----------|------------|-------|"]
 for r in rows:
-    out.append("| {} | {} | {} | {} | {} |".format(
-        r.get("discipline",""), r.get("difficulty",""), r.get("title",""),
-        r.get("skills",""), r.get("box_type","")))
+    out.append("| {} | {} | {} |".format(
+        r.get("category",""), r.get("difficulty",""), r.get("title","")))
 open(os.path.join(root,"index.md"),"w").write("\n".join(out)+"\n")
 print("index.md:",len(rows),"recipes")

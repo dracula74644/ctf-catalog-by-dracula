@@ -1,11 +1,10 @@
 ---
 slug: kebab-case-unique-id
-title: One-line name of the challenge
-discipline: Web Exploitation | Reverse Engineering | Forensics | Cryptography | Binary Exploitation | Privilege Escalation | Password Attacks | Recon | Enumeration | Stego | ...
-skills: comma, separated, tags
+title: Plain-words name — what the player actually does (e.g. "Log in as admin using SQL injection")
+category: Reverse Engineering | Mobile Security | Digital Forensics | Web Application Security | Cryptography | Network Security | Secure Coding | Exploitation | AI/ML
 difficulty: easy | medium | hard
+skills: comma, separated, tags
 box_type: hosted | download | either
-category: with_key | without_key
 status: built | idea
 ---
 

@@ -11,12 +11,11 @@
   h1{margin:0;font-size:24px} .count{color:var(--dim);font-size:13px}
   .bar{position:sticky;top:0;background:var(--bg);border-bottom:1px solid var(--line);padding:12px 24px;z-index:5}
   .bar .row{max-width:1200px;margin:0 auto;display:flex;gap:10px;flex-wrap:wrap;align-items:center}
-  select,input{background:var(--card2);color:var(--tx);border:1px solid var(--line);border-radius:8px;padding:8px 10px;font-size:13.5px}
-  input.search{flex:1;min-width:180px}
+  select{background:var(--card2);color:var(--tx);border:1px solid var(--line);border-radius:8px;padding:8px 10px;font-size:13.5px}
   main{max-width:1200px;margin:0 auto;padding:18px 24px 60px;display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:14px}
   .card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px;display:flex;flex-direction:column;gap:10px}
   .card h2{margin:0;font-size:16.5px}
-  .disc{font-size:12px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:var(--a)}
+  .cat{font-size:12px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:var(--a)}
   .badges{display:flex;gap:6px;flex-wrap:wrap}
   .b{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.3px;padding:2px 8px;border-radius:999px;border:1px solid var(--line);color:var(--dim)}
   .b.easy{color:var(--e)} .b.medium{color:var(--m)} .b.hard{color:var(--h)}
@@ -39,10 +38,24 @@
 <body>
   <header><h1>CTF Challenge Catalog</h1><div class="count" id="count"></div></header>
   <div class="bar"><div class="row">
-    <input class="search" id="q" placeholder="search title / skills…">
-    <select id="f-disc"><option value="">discipline: all</option></select>
-    <select id="f-diff"><option value="">difficulty: all</option><option value="easy">easy</option><option value="medium">medium</option><option value="hard">hard</option></select>
-    <select id="sort"><option value="discipline">sort: discipline</option><option value="difficulty">sort: difficulty</option><option value="title">sort: title</option></select>
+    <select id="f-cat">
+      <option value="">Category: all</option>
+      <option>Reverse Engineering</option>
+      <option>Mobile Security</option>
+      <option>Digital Forensics</option>
+      <option>Web Application Security</option>
+      <option>Cryptography</option>
+      <option>Network Security</option>
+      <option>Secure Coding</option>
+      <option>Exploitation</option>
+      <option>AI/ML</option>
+    </select>
+    <select id="f-diff">
+      <option value="">Difficulty: all</option>
+      <option value="easy">easy</option>
+      <option value="medium">medium</option>
+      <option value="hard">hard</option>
+    </select>
   </div></div>
   <main id="grid"></main>
   <dialog id="modal"><div class="dh"><h2 id="m-title"></h2><button class="x" id="m-close">&times;</button></div>
@@ -74,16 +87,16 @@ function promptFor(r){
 `hostname, account and story fresh for this CTF — never carry over any old name or code. Mint a `+
 `fresh flag plus an 8-char prefix/postfix and place the flag and access key per the "What to plant" `+
 `section (different spots). Wire it as a normal blueprint challenge, then run challenge-tester.\n\n`+
-`--- RECIPE: ${r.title} (${r.discipline}, ${r.difficulty}) ---\n${r.body}\n`;
+`--- RECIPE: ${r.title} (${r.category}, ${r.difficulty}) ---\n${r.body}\n`;
 }
 function toast(msg){const t=el("toast");t.textContent=msg;t.classList.add("on");setTimeout(()=>t.classList.remove("on"),1400);}
 function copy(text,msg){navigator.clipboard.writeText(text).then(()=>toast(msg||"copied")).catch(()=>toast("copy failed"));}
 function openModal(r){
   el("m-title").textContent=r.title;
   el("m-body").innerHTML=
-    `<div class="disc">${esc(r.discipline)}</div>`+
+    `<div class="cat">${esc(r.category)}</div>`+
     `<div class="badges" style="margin:8px 0"><span class="b ${r.difficulty}">${r.difficulty}</span>`+
-    `<span class="b">${r.box_type}</span><span class="b">${r.category}</span></div>`+
+    `<span class="b">${r.box_type}</span></div>`+
     `<div class="skills">${(r.skills||[]).map(esc).join(" · ")}</div>`+md(r.body)+
     `<div class="btns" style="margin-top:16px">`+
     `<a class="act" href="../recipes/${r.slug}.md" download>Download .md</a>`+
@@ -92,24 +105,18 @@ function openModal(r){
   el("modal").showModal();
 }
 function render(){
-  const q=el("q").value.toLowerCase().trim();
-  const fdi=el("f-disc").value, fd=el("f-diff").value, sort=el("sort").value;
-  let rows=DATA.filter(r=>
-    (!fdi||r.discipline===fdi)&&(!fd||r.difficulty===fd)&&
-    (!q|| (r.title+" "+r.slug+" "+(r.skills||[]).join(" ")+" "+r.discipline).toLowerCase().includes(q)));
-  rows.sort((a,b)=>{
-    if(sort==="difficulty") return (DIFF[a.difficulty]-DIFF[b.difficulty])||a.title.localeCompare(b.title);
-    if(sort==="title") return a.title.localeCompare(b.title);
-    return a.discipline.localeCompare(b.discipline)||(DIFF[a.difficulty]-DIFF[b.difficulty])||a.title.localeCompare(b.title);
-  });
+  const fc=el("f-cat").value, fd=el("f-diff").value;
+  let rows=DATA.filter(r=>(!fc||r.category===fc)&&(!fd||r.difficulty===fd));
+  rows.sort((a,b)=> (a.category||"").localeCompare(b.category||"")
+    || (DIFF[a.difficulty]-DIFF[b.difficulty]) || a.title.localeCompare(b.title));
   el("count").textContent=`${rows.length} of ${DATA.length} recipes`;
   const g=el("grid");
-  if(!rows.length){g.innerHTML="<div class='empty'>No recipes match.</div>";return;}
+  if(!rows.length){g.innerHTML="<div class='empty'>No recipes in this category / difficulty yet.</div>";return;}
   g.innerHTML="";
   rows.forEach(r=>{
     const c=document.createElement("div");c.className="card";
-    c.innerHTML=`<div class="disc">${esc(r.discipline)}</div><h2>${esc(r.title)}</h2>`+
-      `<div class="badges"><span class="b ${r.difficulty}">${r.difficulty}</span><span class="b">${r.box_type}</span></div>`+
+    c.innerHTML=`<div class="cat">${esc(r.category)}</div><h2>${esc(r.title)}</h2>`+
+      `<div class="badges"><span class="b ${r.difficulty}">${r.difficulty}</span></div>`+
       `<div class="skills">${(r.skills||[]).map(esc).join(" · ")}</div>`+
       `<div class="btns"><button class="act view">View</button>`+
       `<a class="act" href="../recipes/${r.slug}.md" download>.md</a>`+
@@ -119,14 +126,10 @@ function render(){
     g.appendChild(c);
   });
 }
-["q","f-disc","f-diff","sort"].forEach(id=>el(id).addEventListener("input",render));
+["f-cat","f-diff"].forEach(id=>el(id).addEventListener("change",render));
 el("m-close").onclick=()=>el("modal").close();
 el("modal").addEventListener("click",e=>{if(e.target===el("modal"))el("modal").close();});
-fetch("recipes.json").then(r=>r.json()).then(d=>{
-  DATA=d;
-  const discs=[...new Set(d.map(r=>r.discipline).filter(Boolean))].sort();
-  const sel=el("f-disc"); discs.forEach(x=>{const o=document.createElement("option");o.value=x;o.textContent=x;sel.appendChild(o);});
-  render();
-}).catch(()=>el("grid").innerHTML="<div class='empty'>recipes.json not found — run ./serve.sh</div>");
+fetch("recipes.json").then(r=>r.json()).then(d=>{DATA=d;render();})
+  .catch(()=>el("grid").innerHTML="<div class='empty'>recipes.json not found — run ./serve.sh</div>");
 </script>
 </body></html>

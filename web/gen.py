@@ -17,7 +17,6 @@ for f in sorted(glob.glob(os.path.join(ROOT, "recipes", "*.md"))):
     out.append({
         "slug": fm.get("slug", os.path.basename(f)[:-3]),
         "title": fm.get("title", ""),
-        "discipline": fm.get("discipline", "Misc"),
         "skills": skills,
         "box_type": fm.get("box_type", ""),
         "difficulty": fm.get("difficulty", ""),

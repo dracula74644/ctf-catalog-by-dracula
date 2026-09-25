@@ -1,11 +1,10 @@
 ---
 slug: web-idor-enumeration
-title: IDOR: enumerate object IDs to reach internal records
-discipline: Web Exploitation
+title: See other people's records by changing the ID
+category: Web Application Security
 skills: web, idor, access-control
 difficulty: easy
 box_type: hosted
-category: with_key
 status: built
 ---
 

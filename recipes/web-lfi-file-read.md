@@ -1,11 +1,10 @@
 ---
 slug: web-lfi-file-read
-title: Local file read via path traversal
-discipline: Web Exploitation
+title: Read hidden server files through the website
+category: Web Application Security
 skills: web, lfi, path-traversal
 difficulty: medium
 box_type: hosted
-category: with_key
 status: built
 ---
 

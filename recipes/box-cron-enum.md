@@ -1,11 +1,10 @@
 ---
 slug: box-cron-enum
-title: Info disclosure via cron/log enumeration
-discipline: Recon
+title: Find secrets left behind by a scheduled job
+category: Exploitation
 skills: box, enumeration, linux
 difficulty: easy
 box_type: hosted
-category: with_key
 status: built
 ---
 

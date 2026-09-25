@@ -1,11 +1,10 @@
 ---
 slug: web-sqli-auth-bypass
-title: SQL injection auth bypass to an admin area
-discipline: Web Exploitation
+title: Log in as admin using SQL injection
+category: Web Application Security
 skills: web, sqli, auth-bypass
 difficulty: medium
 box_type: hosted
-category: with_key
 status: built
 ---
 

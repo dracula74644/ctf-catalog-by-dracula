@@ -1,11 +1,10 @@
 ---
 slug: logs-encoded-beacons
-title: Encoded exfil hidden in noisy server logs
-discipline: Forensics
+title: Decode a hidden message buried in the logs
+category: Digital Forensics
 skills: log-analysis, encoding, forensics
 difficulty: medium
 box_type: hosted
-category: with_key
 status: built
 ---
 

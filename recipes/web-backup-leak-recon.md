@@ -1,11 +1,10 @@
 ---
 slug: web-backup-leak-recon
-title: Exposed backup file leaks credentials/scheme
-discipline: Recon
+title: Find secrets in a leaked website backup file
+category: Web Application Security
 skills: web, recon, information-disclosure
 difficulty: easy
 box_type: hosted
-category: with_key
 status: built
 ---
 

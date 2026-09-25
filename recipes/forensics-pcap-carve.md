@@ -1,11 +1,10 @@
 ---
 slug: forensics-pcap-carve
-title: Carve an exfiltrated file out of a capture
-discipline: Forensics
+title: Pull a stolen file out of captured traffic
+category: Network Security
 skills: forensics, pcap, file-carving
 difficulty: medium
 box_type: download
-category: with_key
 status: built
 ---
 

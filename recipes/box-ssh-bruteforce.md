@@ -1,11 +1,10 @@
 ---
 slug: box-ssh-bruteforce
-title: SSH foothold via a targeted password brute-force
-discipline: Password Attacks
+title: Guess the SSH password to get onto the box
+category: Exploitation
 skills: box, brute-force, passwords
 difficulty: medium
 box_type: hosted
-category: with_key
 status: built
 ---
 

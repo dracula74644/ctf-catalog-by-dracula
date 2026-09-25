@@ -1,11 +1,10 @@
 ---
 slug: re-obfuscated-binary
-title: Reverse an obfuscated binary to recover a secret
-discipline: Reverse Engineering
+title: Reverse a scrambled program to find its secret
+category: Reverse Engineering
 skills: reverse-engineering, binary
 difficulty: hard
 box_type: download
-category: with_key
 status: built
 ---
 

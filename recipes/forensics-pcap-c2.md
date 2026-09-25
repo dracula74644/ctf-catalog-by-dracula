@@ -1,11 +1,10 @@
 ---
 slug: forensics-pcap-c2
-title: Identify C2 beaconing and read the beacon payload
-discipline: Forensics
+title: Spot the malware phone-home in captured traffic
+category: Network Security
 skills: forensics, pcap, c2, network
 difficulty: medium
 box_type: download
-category: with_key
 status: built
 ---
 
