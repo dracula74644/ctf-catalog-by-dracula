@@ -1,92 +1,42 @@
 <!doctype html><html lang="en"><head><meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>CTF Catalog By Dracula</title>
+<meta name="viewport" content="width=device-width,initial-scale=1"><title>CTF Catalog By Dracula</title>
 <style>
- /* Terminal palette + editorial serif fonts — polished */
- :root{--bg:#05080a;--card:#0b1113;--card2:#0f1719;--line:#2c5342;--soft:#22423450;
-   --tx:#d6f5df;--dim:#6f9a80;--a:#39ff9a;--a-dim:#2f6b4f;--e:#7ee0a0;--m:#e6d15a;--h:#ff8a8a;
-   --glow:rgba(57,255,154,.16);
-   --serif:Georgia,"Times New Roman","DejaVu Serif","Nimbus Roman",serif;
-   --mono:ui-monospace,"DejaVu Sans Mono","Courier New",monospace}
+ :root{--bg:#282a36;--card:#343746;--card2:#3c3f52;--line:#44475a;--tx:#f8f8f2;--dim:#a4abd0;
+   --purple:#bd93f9;--pink:#ff79c6;--cyan:#8be9fd;--green:#50fa7b;--yellow:#f1fa8c;--orange:#ffb86c;--red:#ff5555;--comment:#6272a4}
  *{box-sizing:border-box}html,body{height:100%}
- body{margin:0;background:
-   radial-gradient(1200px 500px at 80% -10%,rgba(57,255,154,.05),transparent 60%),var(--bg);
-   color:var(--tx);font:16px/1.6 var(--serif);display:flex;flex-direction:column;height:100vh}
- .hdr{padding:24px 30px 8px}
- .hdr h1{margin:0;font-size:31px;font-weight:400;letter-spacing:.3px}
- .hdr h1::before{content:"# ";color:var(--a);font-family:var(--mono);font-size:24px}
- .hdr .by{color:var(--a);font-style:italic}
- .bar{padding:12px 30px 16px;display:flex;gap:12px;align-items:center;flex-wrap:wrap;
-   border-bottom:1px solid var(--line);position:sticky;top:0;z-index:4;
-   background:linear-gradient(180deg,var(--bg),rgba(5,8,10,.86));backdrop-filter:blur(7px)}
- .prompt{color:var(--dim);font-family:var(--mono);font-size:13px}
- .prompt::before{content:"catalog@dracula:~$ ";color:var(--a)}
- select{background:var(--card);color:var(--tx);border:1px solid var(--line);border-radius:8px;
-   padding:8px 12px;font:14px var(--serif);transition:border-color .15s,box-shadow .15s}
- select:hover{border-color:var(--a-dim)}
- select:focus{outline:0;border-color:var(--a);box-shadow:0 0 0 3px var(--glow)}
- .count{color:var(--dim);font-family:var(--mono);font-size:12.5px;margin-left:auto}
- main{overflow-y:auto;flex:1;padding:22px 30px 48px}
- .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:18px}
- .box{position:relative;overflow:hidden;background:linear-gradient(180deg,#0e1618,#0a1012);
-   border:1px solid var(--line);border-radius:13px;padding:18px 18px 16px;
-   display:flex;flex-direction:column;gap:10px;
-   transition:border-color .18s ease,transform .18s ease,box-shadow .18s ease}
- .box::before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--a);opacity:.35;transition:opacity .18s}
- .box:hover{border-color:var(--a);transform:translateY(-3px);box-shadow:0 14px 30px -12px var(--glow)}
- .box:hover::before{opacity:1}
- .cattag{font-family:var(--mono);font-size:11px;color:var(--a);letter-spacing:.4px}
- .cattag::before{content:"# "}
- .box h2{margin:0;font-size:19.5px;font-weight:400;line-height:1.3}
- .box h2::before{content:"> ";color:var(--a);font-family:var(--mono)}
- .badge{align-self:flex-start;display:inline-flex;align-items:center;gap:7px;
-   font-family:var(--mono);font-size:11px;border:1px solid var(--soft);
-   border-radius:999px;padding:3px 11px;color:var(--dim);text-transform:lowercase;
-   background:rgba(255,255,255,.02)}
- .badge::before{content:"";width:7px;height:7px;border-radius:50%;background:currentColor;box-shadow:0 0 6px currentColor}
- .badge.easy{color:var(--e)}.badge.medium{color:var(--m)}.badge.hard{color:var(--h)}
- .skills{display:flex;gap:6px;flex-wrap:wrap}
- .skill{font-family:var(--mono);font-size:11px;color:var(--dim);background:rgba(57,255,154,.04);
-   border:1px solid var(--soft);border-radius:999px;padding:2px 9px}
- .src{color:var(--dim);font-size:12.5px}.src b{color:var(--tx);font-style:italic}
- .btns{display:flex;gap:8px;margin-top:6px;flex-wrap:wrap}
- .act{border-radius:9px;padding:8px 14px;font:13px var(--mono);cursor:pointer;text-decoration:none;
-   background:transparent;color:var(--dim);border:1px solid var(--line);
-   transition:color .15s,border-color .15s,background .15s,transform .05s}
- .act:hover{color:var(--a);border-color:var(--a);background:rgba(57,255,154,.06)}
- .act:active{transform:translateY(1px)}
- .act.primary{background:rgba(57,255,154,.12);color:var(--a);border-color:var(--a-dim)}
- .act.primary:hover{background:var(--a);color:var(--bg);border-color:var(--a)}
- .empty{grid-column:1/-1;color:var(--dim);text-align:center;padding:80px;font-style:italic}
- .cm-md h2{font-family:var(--serif)}
- ::-webkit-scrollbar{width:11px;height:11px}
- ::-webkit-scrollbar-thumb{background:#1a2e26;border-radius:8px;border:2px solid var(--bg)}
- ::-webkit-scrollbar-thumb:hover{background:var(--a-dim)}
+ body{margin:0;background:var(--bg);color:var(--tx);font:15px/1.55 system-ui,Segoe UI,Roboto,Arial,sans-serif;display:flex;flex-direction:column;height:100vh}
+ .bar{border-bottom:1px solid var(--line);padding:18px 28px;display:flex;gap:12px;align-items:center;flex-wrap:wrap;position:sticky;top:0;background:rgba(40,42,54,.92);backdrop-filter:blur(8px);z-index:4}
+ .bar h1{margin:0 auto 0 0;font-size:22px;font-weight:800}.bar h1 b{color:var(--purple)}.bar h1 i{color:var(--pink);font-style:normal}
+ select{background:var(--card);color:var(--tx);border:1px solid var(--line);border-radius:10px;padding:8px 12px;font-size:13px}
+ select:focus{outline:0;border-color:var(--purple);box-shadow:0 0 0 3px rgba(189,147,249,.25)}
+ .pill{background:var(--card);border:1px solid var(--line);color:var(--dim);border-radius:999px;padding:6px 14px;font-size:12.5px;cursor:pointer;font-weight:600}.pill.on{background:var(--purple);color:#282a36;border-color:var(--purple)}
+ .count{color:var(--comment);font-size:12.5px}
+ main{overflow-y:auto;flex:1}
+ .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:18px;padding:22px 28px 46px}
+ .box{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px;display:flex;flex-direction:column;gap:10px;cursor:pointer;transition:.18s}
+ .box:hover{transform:translateY(-3px);border-color:var(--purple);box-shadow:0 16px 34px -14px rgba(189,147,249,.4)}
+ .cattag{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.5px;color:var(--pink)}
+ .box h2{margin:0;font-size:17.5px;font-weight:700;line-height:1.3;color:var(--tx)}
+ .badge{align-self:flex-start;display:inline-flex;gap:7px;align-items:center;font-size:11px;font-weight:700;text-transform:lowercase;padding:3px 12px;border-radius:999px;border:0;color:#282a36}
+ .badge.easy{background:var(--green)}.badge.medium{background:var(--orange)}.badge.hard{background:var(--red)}
+ .skills{display:flex;gap:6px;flex-wrap:wrap}.skill{font-size:11px;color:var(--cyan);background:rgba(139,233,253,.08);border:1px solid rgba(139,233,253,.25);border-radius:999px;padding:2px 10px}
+ .src{color:var(--comment);font-size:11.5px}.src b{color:var(--tx)}
+ .btns{display:flex;gap:8px;margin-top:auto;flex-wrap:wrap}
+ .act{border-radius:9px;padding:7px 13px;font-size:12.5px;cursor:pointer;text-decoration:none;background:transparent;color:var(--dim);border:1px solid var(--line);transition:.15s}
+ .act:hover{color:var(--purple);border-color:var(--purple)}.act.primary{background:var(--purple);color:#282a36;border-color:var(--purple);font-weight:700}.act.primary:hover{background:var(--pink);border-color:var(--pink)}
+ .empty{grid-column:1/-1;color:var(--comment);text-align:center;padding:70px}
 </style></head>
 <body>
- <header class="hdr"><h1>CTF Catalog <span class="by">By Dracula</span></h1></header>
- <div class="bar"><span class="prompt"></span>
-   <select id="cat"></select><select id="ctf"></select><select id="diff"></select>
-   <span class="count" id="count"></span></div>
+ <div class="bar"><h1><b>#</b> CTF Catalog <i>By Dracula</i></h1>
+  <select id="cat"></select><select id="ctf"></select><span id="diffs"></span><span class="count" id="count"></span></div>
  <main><div class="grid" id="grid"></div></main>
 <script>
  window.onCatalog=function(d){
-   var c=CATALOG.catCounts(), cat=document.getElementById("cat");
-   cat.innerHTML='<option value="">category: all</option>'+
-     CATALOG.FIXED_CATS.filter(function(x){return c[x];}).map(function(x){return '<option>'+CATALOG.esc(x)+'</option>';}).join("");
-   cat.onchange=function(){CATALOG.set("cat",cat.value);};
-   var ctf=document.getElementById("ctf");
-   ctf.innerHTML='<option value="">ctf: all</option>'+CATALOG.ctfs().map(function(x){return '<option>'+CATALOG.esc(x)+'</option>';}).join("");
-   ctf.onchange=function(){CATALOG.set("ctf",ctf.value);};
-   var df=document.getElementById("diff");
-   df.innerHTML='<option value="">difficulty: all</option><option>easy</option><option>medium</option><option>hard</option>';
-   df.onchange=function(){CATALOG.set("diff",df.value);};
+  var c=CATALOG.catCounts(),sc=document.getElementById("cat");
+  sc.innerHTML='<option value="">category: all</option>'+CATALOG.FIXED_CATS.filter(function(x){return c[x];}).map(function(x){return '<option>'+CATALOG.esc(x)+'</option>';}).join("");sc.onchange=function(){CATALOG.set("cat",sc.value);};
+  var st=document.getElementById("ctf");st.innerHTML='<option value="">ctf: all</option>'+CATALOG.ctfs().map(function(x){return '<option>'+CATALOG.esc(x)+'</option>';}).join("");st.onchange=function(){CATALOG.set("ctf",st.value);};
+  var dm=document.getElementById("diffs");dm.innerHTML='<button class="pill on" data-d="">All</button>'+["easy","medium","hard"].map(function(x){return '<button class="pill" data-d="'+x+'">'+x+'</button>';}).join("");
+  dm.querySelectorAll(".pill").forEach(function(b){b.onclick=function(){CATALOG.set("diff",b.dataset.d);dm.querySelectorAll(".pill").forEach(function(p){p.classList.toggle("on",p.dataset.d===b.dataset.d);});};});
  };
- window.paint=function(rows){
-   document.getElementById("count").textContent=rows.length+" match"+(rows.length===1?"":"es");
-   var g=document.getElementById("grid");
-   g.innerHTML=rows.length?rows.map(function(r){return CATALOG.cardHTML(r);}).join(""):"<div class='empty'>-- no matches --</div>";
-   CATALOG.wire(g);
- };
-</script>
-<script src="core.js"></script></body></html>
+ window.paint=function(rows){document.getElementById("count").textContent=rows.length+" recipes";var g=document.getElementById("grid");g.innerHTML=rows.length?rows.map(function(r){return CATALOG.cardHTML(r);}).join(""):"<div class='empty'>No recipes here.</div>";CATALOG.wire(g);};
+</script><script src="core.js"></script></body></html>
