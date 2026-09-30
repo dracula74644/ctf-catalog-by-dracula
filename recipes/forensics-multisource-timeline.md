@@ -10,18 +10,30 @@ status: built
 ---
 
 ## Mechanic (theme-agnostic)
-A full multi-artifact DFIR case: a disk image, a removable-media image, firewall
-logs, security-event exports, browser history, emails, and a memory dump. The story
-seems to be one thing (e.g. a ransomware hit), but correlating timestamps across all
-sources proves a different truth (the data theft happened *before* the loud event).
-The flag lives in an encrypted archive whose password exists only transiently — in
-the memory dump (clipboard remnants / a command line). A key file was deleted from
-the removable-media image and must be undeleted. The player builds a minute-by-minute
-timeline, extracts the password from RAM, undeletes the file, and opens the archive.
+A full multi-artifact DFIR case: an NTFS disk image (E01), a FAT removable-media
+image, a firewall log, a parsed security-event log (CSV, EvtxECmd/Chainsaw-style),
+browser history (SQLite), a set of emails (`.eml`), and a memory dump. The cover
+story is a ransomware hit; correlating timestamps proves the opposite — the data was
+copied to removable media and exfiltrated *before* the loud encryption/cleanup ran,
+so the ransomware is a distraction. The security log tells the story through Windows
+event IDs: 4624 logon (who), 4663 object access (archive opened / copied), 6416
+removable-media mount (with device serial), 4688 process creation (7-Zip packaging,
+`curl` upload, `powershell` cleanup), 1074 shutdown — the theft window precedes the
+cover event. The flag lives in an AES archive whose password exists only transiently
+in the memory dump (as clipboard text and as the 7-Zip command line); the archive
+itself was deleted from the FAT image but is contiguous and recoverable. Both disk
+images are scrubbed so `FLAG`/password grep returns nothing — the solve is the
+timeline plus RAM recovery, not string search.
 
 ## Player solve path
-1. Ingest each artifact; build a unified timeline of the key events.
-2. Show the theft window precedes the noisy event (order matters, not just presence).
-3. Carve the archive password out of the memory dump (clipboard / process cmdline).
-4. Undelete the archive from the removable-media image (fls/icat-style recovery).
-5. Extract with the recovered password → flag.
+1. Read the tasking, then reconstruct a minute-by-minute timeline from the parsed
+   security-event CSV, mapping each event ID (logon → object access → USB mount →
+   process creation → shutdown) to who/how/when.
+2. Show the copy→archive→upload window occurs *before* the ransomware/cleanup step,
+   corroborated by the firewall log's large outbound transfer, the browser history
+   (archiver download, cloud login, upload host), and the pretext/buyer emails.
+3. Carve the RAM: `strings memory.raw | grep` for the archiver command line and
+   clipboard remnants → the archive password.
+4. Undelete the archive from the FAT removable-media image (`fls -rd` to find the
+   deleted entry, `icat` to dump it; PhotoRec/foremost also work).
+5. Extract the archive with the memory-recovered password → flag.

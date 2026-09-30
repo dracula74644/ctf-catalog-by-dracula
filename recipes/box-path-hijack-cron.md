@@ -10,17 +10,27 @@ status: built
 ---
 
 ## Mechanic (theme-agnostic)
-The player SSHes into a box as an unprivileged user who belongs to a group that owns
-a writable directory early in root's PATH. A root-owned script (run by cron as root on
-a short interval) invokes a command by **bare name** — no absolute path. Because the
-writable directory precedes the real one in the job's `PATH`, the player drops a
-malicious executable with that command's name; the next cron run executes it as root.
-The payload makes a SUID-root copy of a shell; the player runs it with `-p` to become
-root and reads a root-only secret used to unlock the flag.
+The player has SSH access to a box as an unprivileged user who belongs to a group that
+owns a directory sitting **first** on root's cron PATH and made group-writable. A
+root-owned script — run by cron as root on a short interval (here every 2 minutes via
+a drop-in in `/etc/cron.d`) — invokes system commands by **bare name** (e.g. `tar`,
+`rsync`) with no absolute path, and the cron file sets an explicit `PATH` that places
+the group-writable directory ahead of the real bin dir. The script file itself is
+root-owned and unwritable; the flaw is the unqualified command calls plus the PATH
+order. The player drops a malicious executable named after one of those bare commands
+into the writable directory; on the next tick, PATH resolution finds it first and runs
+it as root. The payload copies a shell and makes it SUID root; running it with `-p`
+preserves euid 0, giving a root shell that reads a root-only secret which unlocks the
+flag. The box runs SSH with no login rate-limiting (intended isolated practice target).
 
 ## Player solve path
-1. SSH in; enumerate (`id`, group memberships, writable dirs in PATH, cron files).
-2. Find the root cron job calling a bare command with a group-writable PATH dir.
-3. Drop `<command>` in that dir: it copies a shell to a temp path and SUIDs it.
-4. Wait for cron → run the SUID shell with `-p` → root → read the root-only secret.
-5. Submit the secret to the vault gate → flag.
+1. SSH in; enumerate: `id` (group memberships), `sudo -l` (none), and cron files.
+2. Read the root cron job → note its explicit `PATH` order and that its script calls a
+   bare (unqualified) command.
+3. Confirm the first `PATH` entry is a directory writable by your group
+   (`ls -ld`, `find / -writable -type d`).
+4. Drop an executable named after that bare command into the writable dir; it copies a
+   shell to a temp path and `chmod 4755`s it (SUID root).
+5. Wait for the next cron tick → run the SUID shell with `-p` → euid 0 → read the
+   root-only secret.
+6. Submit the secret to the unlock gate → flag.

@@ -10,15 +10,23 @@ status: built
 ---
 
 ## Mechanic (theme-agnostic)
-A compiled binary (DLL/EXE/shared object) carries an audio file embedded as an
-in-binary resource or an appended blob. The audio itself is the payload: a tone
-or beep pattern (e.g. Morse code) that spells the secret. Nothing in the program's
-visible behaviour hints at it — the resource is only found by inspecting the file,
-carving out the audio, and decoding the sound rather than the code.
+A front-end program prompts for an unlock code; a companion library it imports holds
+the real logic. Embedded in that library as a binary resource (on PE, an `RCDATA`
+resource — type 10 — under a named blob) is a WAV audio clip. The audio *is* the
+payload: it beeps the unlock code in International Morse. Secrets are hardened so
+`strings`/`grep` can't shortcut the solve — the code is stored only as a hash
+(e.g. FNV-1a) and the flag is XOR-sealed with the code, so neither the code nor the
+flag exists as plaintext anywhere. Entering the decoded code into the front-end
+unseals and prints the flag. A useful gotcha: the current (v3) `binwalk` rewrite only
+reports the PE header and will NOT carve this embedded WAV, so extraction is done by
+reading the resource directory or carving the RIFF chunk by hand.
 
 ## Player solve path
-1. Inspect the binary (strings, a resource viewer, or a file-carver) and notice an
-   embedded/appended audio stream (magic bytes like `RIFF`/`WAVE`).
-2. Carve the audio out to a standalone file.
-3. Listen / view the waveform or spectrogram: the tone pattern is Morse (or similar).
-4. Decode the tones to text to recover the secret.
+1. Note the front-end imports a library; enumerate that library's exports and
+   resources — an unused "hint" export points at media/archives hiding the code.
+2. Extract the embedded WAV. Reliable options: a resource tool (`wrestool -t RCDATA`,
+   Resource Hacker, pe-tree), or a manual carve — find the `RIFF` marker, read the
+   4-byte little-endian chunk size, and copy `size + 8` bytes out to a `.wav`.
+3. Play the WAV / view its waveform or spectrogram: the tone pattern is Morse.
+4. Decode the Morse to recover the unlock code.
+5. Enter the code into the front-end program → it prints the flag.

@@ -10,16 +10,23 @@ status: built
 ---
 
 ## Mechanic (theme-agnostic)
-A short ciphertext is wrapped in layers: an encoding (Base64) over a classical cipher
-(Vigenère) whose key is a word the accompanying story quietly names ("stamped on
-everything"). Decrypting yields geographic coordinates — deliberately spelled out in
-*words*, not digits, because a classical cipher passes digits through unchanged and
-plaintext digits would skip the cipher entirely. The coordinates aren't the flag; the
-player must OSINT them to a real-world landmark and submit that landmark's name to a
-small verification gate, which then releases the flag.
+A short ciphertext is wrapped in two layers: an outer Base64 encoding over an inner
+classical polyalphabetic cipher (Vigenère). The story quietly names the key — a word
+"stamped on everything" (an org/name embedded in the narrative, used verbatim as the
+repeating key). Decrypting yields geographic coordinates written out in *words*
+("NORTH THREE SEVEN POINT TWO TWO…"), deliberately spelled rather than as digits: a
+classical cipher passes digits through unchanged, so plaintext digits would let a
+solver skip the cipher — spelling them keeps the Vigenère step essential. The
+coordinates aren't the flag; the player must OSINT them to a specific real-world
+landmark (the surrounding plaintext also describes it) and submit that landmark's name
+to a small verification gate — tolerant of case, spacing, diacritics, and a trailing
+city/country — which then releases the flag.
 
 ## Player solve path
-1. Recognize and strip the outer encoding (Base64).
-2. Identify the classical cipher and its key from the story's hint; decrypt.
-3. Read the coordinates (written as words) and OSINT them to a specific place.
-4. Submit the place name to the unlock gate → flag.
+1. Notice the payload is Base64 and decode it — the output is still uppercase A-Z with
+   spaces and punctuation, so it's a classical cipher, not plaintext yet.
+2. Identify the repeating-key cipher (Vigenère) and take its key from the story's hint
+   (the name stamped everywhere); decrypt.
+3. Read the coordinates spelled in words and convert them back to decimal lat/long.
+4. OSINT the coordinates on any map service to the specific landmark; submit that
+   place name to the unlock gate → flag.

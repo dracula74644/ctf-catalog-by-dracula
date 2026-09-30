@@ -10,17 +10,27 @@ status: built
 ---
 
 ## Mechanic (theme-agnostic)
-The player is handed a forensic disk image (E01/raw) plus case notes. The flag sits
-inside a strongly-encrypted archive (AES zip) on the image — but the password is not
-written anywhere whole. One half is recoverable as a *deleted* file (from the recycle
-bin / unallocated space); the other half is an innocuous-looking value buried in a
-document (a year in a PDF, a name in a spreadsheet). The player mounts/parses the
-image, recovers the deleted fragment, reads the document fragment, concatenates them
-into the password, and opens the archive.
+Players get a forensic disk image (E01/raw, an NTFS volume starting a few thousand
+sectors in) packaged with case notes and hashes. The flag sits inside a strongly
+encrypted archive (7-Zip AES-256) in a user's Downloads — but the password is never
+written whole. One half is in a *deleted* note recoverable from the Recycle Bin
+(each deleted item is an `$I` metadata / `$R` content pair) that reads like a prefix
+plus an instruction to "append the founding year"; the other half is an innocuous
+value buried in a shipped document (a year in a handbook PDF, a name in a
+spreadsheet). Browser history and SOP docs provide context but no password, and
+several red-herring files (an unrelated photos zip, a `wifi.txt`) sit alongside to
+punish grepping. The raw image leaks neither the flag nor the full password —
+concatenating the two fragments and opening the archive is the only path.
 
 ## Player solve path
-1. Mount or parse the image (E01 tooling / sleuthkit).
-2. Recover a deleted file from the recycle bin / unallocated space → partial password.
-3. Find the complementary value inside a shipped document (PDF/handbook).
-4. Combine the fragments → the archive password.
-5. Open the AES-encrypted archive → flag.
+1. Load the image in Autopsy or sleuthkit CLI (`mmls` to find the volume offset,
+   `fls -r -o <off>` to list, `icat` to extract files).
+2. Browse the user profile: find the encrypted archive in Downloads and note it needs
+   a password; skip the decoy archives/notes.
+3. Recover the deleted note from the Recycle Bin (read the `$I` entries to find the
+   one whose original name matches, then read its `$R` content) → the password prefix
+   and the "append the founding year" hint.
+4. Read the complementary value from a shipped document (e.g. the founding year in a
+   handbook PDF's history section).
+5. Concatenate the fragments into the full password and extract the AES archive
+   (`7z x -p'<password>' ...`) → flag.

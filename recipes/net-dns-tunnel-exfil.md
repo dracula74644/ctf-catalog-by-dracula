@@ -10,18 +10,29 @@ status: built
 ---
 
 ## Mechanic (theme-agnostic)
-A packet capture hides a DNS-tunneling exfiltration among realistic benign traffic.
-One host Base32-encodes a stolen record (DNS-safe charset, no padding chars) and
-splits it across many long subdomain labels, sent as A queries to one attacker domain
-at an abnormally high rate. The player filters DNS, spots the odd host + domain +
-Base32 charset, pulls the labels **in time order**, concatenates and Base32-decodes
-them (re-padding to a multiple of 8) to recover the record — which names an
-authentication phrase submitted to a gate that releases the flag. Benign length
-red herrings (DKIM/SPF/telemetry) mean the tell is behaviour, not label length alone.
+Players get a packet capture (plus a resolver query log and a topology diagram)
+where a single host exfiltrates a stolen record over DNS tunneling, hidden among
+realistic benign traffic. There is no HTTP/FTP and nothing on disk — the data leaves
+as DNS itself. The record is Base32-encoded (charset `A-Z2-7`, padding stripped) and
+split across many long subdomain labels (~40 chars each), sent as A queries to one
+attacker-controlled domain that is not on the allowlist, at a rate far above the
+per-host baseline (e.g. a 50-queries/min baseline blown past at ~100+/min — a short
+burst of a couple dozen queries in ~15 seconds). The tell is *behaviour + destination*,
+not length: routine DKIM/SPF/DMARC and telemetry lookups are also long and must be
+discounted. The decoded record contains an authentication phrase that a gate exchanges
+for the flag.
 
 ## Player solve path
-1. Open the capture; filter DNS and profile query volume per host/domain.
-2. Identify the abnormal host + single attacker domain + Base32-looking labels.
-3. Extract labels in timestamp order; strip the domain suffix; concatenate.
-4. Base32-decode (re-pad) → the stolen record → the auth phrase.
-5. Submit the phrase to the gate → flag.
+1. Open the capture; baseline with the `dns` filter and use Statistics ▸ DNS /
+   Conversations to find the noisy host, then confirm it exceeds the stated per-host
+   query-rate baseline in a short window.
+2. Narrow to outbound queries to the non-allowlisted domain, e.g.
+   `dns.flags.response==0 && dns.qry.name contains "<c2-domain>"` (add
+   `ip.src==<host>` to pin it); note the ~40-char `A-Z2-7` Base32 labels and ignore
+   the benign long lookups.
+3. Extract the qnames **in time order**:
+   `tshark -r cap.pcapng -Y '<filter>' -T fields -e dns.qry.name` (the resolver log
+   holds the same names already time-sorted as an alternative source).
+4. Strip the `.<c2-domain>` suffix from each, concatenate, re-pad with `=` up to the
+   next multiple of 8, and Base32-decode → the stolen record → the auth phrase.
+5. Submit the phrase to the authentication gate (case/spacing normalized) → flag.
