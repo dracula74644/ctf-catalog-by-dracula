@@ -66,7 +66,7 @@
   var c=CATALOG.catCounts(),nav=document.getElementById("cats");
   var mk=function(v,l,n){return '<button class="cat" data-v="'+CATALOG.esc(v)+'"><span>'+CATALOG.esc(l)+'</span><span class="n">'+n+'</span></button>';};
   nav.innerHTML='<div class="navlbl">Category</div>'+mk("","All",d.length)+
-    CATALOG.FIXED_CATS.filter(function(x){return c[x];}).map(function(x){return mk(x,x,c[x]);}).join("");
+    CATALOG.FIXED_CATS.map(function(x){return mk(x,x,c[x]||0);}).join("");
   nav.querySelectorAll(".cat").forEach(function(b){b.onclick=function(){CATALOG.set("cat",b.dataset.v);hi();};});
   var dm=document.getElementById("diffs");
   dm.innerHTML='<button class="pill on" data-d="">All</button>'+["easy","medium","hard"].map(function(x){return '<button class="pill" data-d="'+x+'">'+x+'</button>';}).join("");
