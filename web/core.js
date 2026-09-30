@@ -32,8 +32,9 @@
     return "Add this challenge to the CTF I'm building on the CTF blueprint, themed to "+
 "<DESCRIBE YOUR CTF'S STORY HERE>.\nUse ONLY the mechanic below. Invent every name, filename, "+
 "hostname, account and story fresh for this CTF — never carry over any old name or code. Mint a "+
-"fresh flag plus an 8-char prefix/postfix and place the flag and access key per the \"What to plant\" "+
-"section (different spots). Wire it as a normal blueprint challenge, then run challenge-tester.\n\n"+
+"fresh flag plus an 8-char prefix/postfix, place the flag where it fits this challenge, and put the "+
+"access key a short step away (a different spot — never the same line/file). Wire it as a normal "+
+"blueprint challenge, then run challenge-tester.\n\n"+
 "--- RECIPE: "+r.title+" ("+r.category+", "+r.difficulty+") ---\n"+r.body+"\n";
   }
   var _toast;
@@ -144,8 +145,9 @@
           "  category (EXACTLY one of: Reverse Engineering, Mobile Security, Digital Forensics,",
           "  Web Application Security, Cryptography, Network Security, Secure Coding, Exploitation, AI/ML);",
           "  source_ctf (this CTF's title from ctf.conf CTF_NAME); difficulty (easy|medium|hard);",
-          "  skills; box_type (hosted|download); status: built. Then sections: Mechanic, Player solve",
-          "  path, What to plant, Skin points, Blueprint mapping.",
+          "  skills; box_type (hosted|download); status: built. Then two sections that focus on the",
+          "  challenge itself: Mechanic (what the challenge is — the vuln and its moving parts) and",
+          "  Player solve path (the numbered steps to the flag).",
           "- If the challenge folder already has recipe.md, use it; otherwise derive it from the challenge.",
           "- Save each as ~/Documents/ctf-catalog/recipes/<slug>.md (ask before overwriting a different",
           "  existing recipe).","",

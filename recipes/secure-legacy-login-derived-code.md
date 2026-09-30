@@ -17,14 +17,3 @@ Source review shows the strict admin login is a deliberate dead end (its real pa
 2. Find the legacy branch and its substring rules + constant password + case-code formula.
 3. Pick a username satisfying the substring rules; compute the case code from the normalized name.
 4. Submit username + constant password + computed code to reach the restricted page.
-
-## What to plant
-- FLAG: rendered on the restricted page after the legacy login succeeds.
-- ACCESS KEY: a bit alongside — a second value on that same restricted page, rendered only for successful logins (never in the source zip, index, or errors).
-
-## Skin points (change per CTF)
-Change: the substring rules, constant password, the code formula, the portal story.
-Keep: dead-end strict path + legacy branch whose "secret" code is computed from controllable input.
-
-## Blueprint mapping
-download (source.zip) + hosted app. build.py injects __FLAG_<ID>__ / __ACCESS_KEY_<ID>__ into the restricted template, rendered only when valid_login() (legacy branch) succeeds.

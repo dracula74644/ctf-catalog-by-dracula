@@ -23,19 +23,3 @@ credential pair sits in an obvious config/test class to bait a shallow look.
    (reverse, Base64, XOR, etc.).
 4. Reverse the transform on the stored blobs to recover the real credentials and the
    flag.
-
-## What to plant
-- FLAG: as an obfuscated blob in code, decoded at runtime (never plaintext).
-- ACCESS KEY: a bit alongside — in a *different* class/resource than the flag blob
-  (e.g. a manifest meta-data value or a separate helper), never the same string.
-
-## Skin points (change per CTF)
-Change: package name, app story, the obfuscation recipe, the decoy account.
-Keep: no plaintext secret; a decode routine in the app; a decoy to punish shallow
-analysis; solvable by static analysis alone.
-
-## Blueprint mapping
-- box_type: download; portal serves the `.apk`.
-- build.py obfuscates `__FLAG_<ID>__` into the app's credential store and plants
-  `__ACCESS_KEY_<ID>__` in a separate class/resource; app builds offline (framework
-  only) so it decompiles cleanly.

@@ -27,21 +27,3 @@ secret that unlocks the flag. The redeploy-on-change is the escalation — no ki
 3. Rename the binary aside (dir is writable) and write a payload in its place.
 4. Supervisor redeploys the payload as root → SUID a shell → root.
 5. Read the root-only secret → submit to the vault gate → flag.
-
-## What to plant
-- FLAG: at a vault gate keyed on the root-only secret (env; not on the box in plain).
-- ACCESS KEY: a bit alongside — a note in home or the vault README, separate from the
-  root secret and the flag.
-
-## Skin points (change per CTF)
-Change: the "service" story, the supervisor's poll interval, names, the fake service
-tooling.
-Keep: group-writable root service binary **and dir** + a root supervisor that
-redeploys-on-change → rename-and-replace (ETXTBSY-safe) → root exec → read secret.
-
-## Blueprint mapping
-- box_type: hosted SSH box (NO cap_drop / no-new-privileges / read_only — SUID must
-  work) + a small vault service. A fake `systemctl` denies restart to keep it a
-  permissions bug, not a real-systemd bug.
-- build.py compiles the service + supervisor, sets group-writable perms, writes the
-  root secret from env; vault holds `__FLAG_<ID>__`, `__ACCESS_KEY_<ID>__` in home.

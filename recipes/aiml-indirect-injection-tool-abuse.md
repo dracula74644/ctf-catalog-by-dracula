@@ -27,21 +27,3 @@ genuine tool abuse via indirect injection, not context leakage.
 4. The agent obeys the document's injected directive → calls the privileged tool →
    prints the phrase.
 5. Submit the phrase to the vault gate → flag.
-
-## What to plant
-- FLAG: at a vault gate keyed on the phrase; the phrase is returned ONLY by the
-  privileged tool (env), not present in any document.
-- ACCESS KEY: a bit alongside — in a separate visible hint or benign doc, distinct
-  from the poisoned doc and the flag.
-
-## Skin points (change per CTF)
-Change: the agent's tools/persona, the poisoned doc's story, the privileged tool name,
-the phrase.
-Keep: agent trusts document content as instructions; the poisoned doc carries only the
-directive (no secret); the secret lives solely in the privileged tool → real tool abuse.
-
-## Blueprint mapping
-- box_type: hosted; one app = agent + tools + documents + vault gate. Deterministic sim
-  is fine (no live LLM): a retrieved doc containing the directive triggers the tool call.
-- build.py returns the phrase from the privileged tool via env; vault holds
-  `__FLAG_<ID>__`, `__ACCESS_KEY_<ID>__` in a separate hint; no secret in any doc.

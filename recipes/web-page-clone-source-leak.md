@@ -24,20 +24,3 @@ source and bundled assets — is readable by anyone who looks past the rendered 
 2. Read the token left in an HTML comment near the top of the page source.
 3. Follow the linked static asset the clone also fetched; read the token in its
    header/comment.
-
-## What to plant
-- FLAG: in an HTML comment in the main page source (not rendered).
-- ACCESS KEY: in a comment inside a linked static asset — a separate file the clone
-  also pulls, never the same file/line as the flag.
-
-## Skin points (change per CTF)
-Change: the site's brand and copy, what the page pretends to be, the linked asset's
-filename, the comment wording.
-Keep: an unrendered token in the page source PLUS a second token in a linked asset,
-both recoverable by cloning/view-source.
-
-## Blueprint mapping
-- box_type: hosted; target/ is a static-site nginx box.
-- build.py writes the page with `__FLAG_<ID>__` in an HTML comment and a linked
-  asset file with `__ACCESS_KEY_<ID>__` in a comment; inject.manifest lists both
-  spots. The page must `<link>`/`<script src>` the asset so a clone pulls it too.

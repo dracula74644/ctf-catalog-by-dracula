@@ -23,19 +23,3 @@ the player can use their own clock. The reward is a phrase that unlocks the flag
 2. Read the restricted item and the request timestamp from the app.
 3. Recompute the token for that item + timestamp.
 4. POST it to the approval endpoint → reveals the vault phrase → flag.
-
-## What to plant
-- FLAG: server-side, gated behind the phrase (env secret, NOT in shipped source).
-- ACCESS KEY: a bit alongside — a separate env value or a nearby endpoint, not in the
-  shipped source and not on the flag's line.
-
-## Skin points (change per CTF)
-Change: the token formula's static prefix, the item names, the story, the UI copy.
-Keep: token = hash of predictable inputs (no real entropy); a tolerant time window;
-real secret env-injected so downloading the code can't shortcut it.
-
-## Blueprint mapping
-- box_type: hosted; the app's source is also the download (secrets stripped).
-- build.py assembles the shipped zip minus compose/flag/solution; `__FLAG_<ID>__` and
-  the phrase/`__ACCESS_KEY_<ID>__` are injected via env at runtime (placeholders only
-  in the source).

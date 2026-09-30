@@ -23,20 +23,3 @@ small verification gate, which then releases the flag.
 2. Identify the classical cipher and its key from the story's hint; decrypt.
 3. Read the coordinates (written as words) and OSINT them to a specific place.
 4. Submit the place name to the unlock gate → flag.
-
-## What to plant
-- FLAG: released by the verification gate only on the correct landmark name (no flag
-  in the downloaded files).
-- ACCESS KEY: a bit alongside — in the downloaded notes/README, separate from the
-  cipher and from the flag.
-
-## Skin points (change per CTF)
-Change: the cipher/key, the landmark, the story that hints at the key, the gate copy.
-Keep: encoding-over-classical-cipher layering; coordinates spelled in words; answer is
-an OSINT'd place name submitted to a gate; flag not in the download.
-
-## Blueprint mapping
-- box_type: download + a tiny hosted unlock page.
-- build.py encrypts the coordinates and self-verifies the decrypt; the gate holds
-  `__FLAG_<ID>__` and releases it on the correct answer; `__ACCESS_KEY_<ID>__` planted
-  in the shipped notes.

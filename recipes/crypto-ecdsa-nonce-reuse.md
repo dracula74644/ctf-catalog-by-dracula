@@ -25,20 +25,3 @@ restricted message.
 3. Reconstruct the exact signed-message canonicalization (defined in the shipped
    verifier) for the restricted item.
 4. Sign it with `d`; submit the forged signature to the registry → flag.
-
-## What to plant
-- FLAG: released by the server only on a valid forged signature (private key never
-  shipped; no flag in the download).
-- ACCESS KEY: a bit alongside — in the shipped README/verifier comments, separate from
-  the flag path.
-
-## Skin points (change per CTF)
-Change: the curve/hash, the message schema, what the "restricted item" is, the story.
-Keep: two signatures with a shared `r`; private-key recovery from nonce reuse;
-server-side signature verification as the gate; private key never distributed.
-
-## Blueprint mapping
-- box_type: download (certs + public key + verifier) + a hosted registry that verifies.
-- build.py forces the reused nonce to produce exact shared `r`, self-verifies the
-  recover→forge→verify chain and no-leak; registry holds `__FLAG_<ID>__`,
-  `__ACCESS_KEY_<ID>__` in the README.

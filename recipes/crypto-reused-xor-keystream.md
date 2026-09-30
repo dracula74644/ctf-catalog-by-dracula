@@ -25,19 +25,3 @@ yields an answer submitted to a gate that releases the flag.
 3. Crib-drag a phrase common to several files to extend the key to full length
    (it spells a coherent passphrase — confirms correctness).
 4. Decrypt the classified file → an answer; submit to the gate → flag.
-
-## What to plant
-- FLAG: released by the gate on the correct decrypted answer (not in the download).
-- ACCESS KEY: a bit alongside — in the shipped notes/README, separate from ciphertext
-  and flag.
-
-## Skin points (change per CTF)
-Change: the key/passphrase, the fixed header, the shared crib phrase, the story.
-Keep: one reused repeating XOR key over many files; key longer than the known header;
-crib-drag completes it; flag behind a gate keyed on the decrypted answer.
-
-## Blueprint mapping
-- box_type: download + a tiny hosted verification page.
-- build.py XORs all files with `__FLAG_<ID>__`-independent key material, self-verifies
-  the crib-drag solve and that no file leaks the answer; the gate holds `__FLAG_<ID>__`
-  and `__ACCESS_KEY_<ID>__` sits in the notes.

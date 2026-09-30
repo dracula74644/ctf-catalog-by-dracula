@@ -24,21 +24,3 @@ into the password, and opens the archive.
 3. Find the complementary value inside a shipped document (PDF/handbook).
 4. Combine the fragments → the archive password.
 5. Open the AES-encrypted archive → flag.
-
-## What to plant
-- FLAG: only inside the encrypted archive (the raw image leaks neither flag nor the
-  full password).
-- ACCESS KEY: a bit alongside — inside the archive next to the flag but on a separate
-  line/file, or in the case notes, never on the same line as the flag.
-
-## Skin points (change per CTF)
-Change: image contents, the two document types the fragments hide in, the archive
-type, the story.
-Keep: password split into a deleted-file fragment + a document fragment; flag only in
-the encrypted archive so the plain image doesn't shortcut it.
-
-## Blueprint mapping
-- box_type: download; portal serves the case archive (image + notes).
-- build.py stages the image, deletes the fragment file into the recycle bin, embeds
-  the other fragment in a generated document, and seals `__FLAG_<ID>__` (+
-  `__ACCESS_KEY_<ID>__` on a separate line) in the AES archive.

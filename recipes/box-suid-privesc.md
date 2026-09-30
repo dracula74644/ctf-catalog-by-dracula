@@ -17,14 +17,3 @@ A custom setuid-root helper does setuid(0) then calls a command by its *bare* na
 2. See it calls a command by relative name.
 3. Plant a fake command in PATH and trigger it → root.
 4. Read /root.
-
-## What to plant
-- FLAG: in /root (root-only).
-- ACCESS KEY: a bit alongside — a second root-only file next to it (e.g. /root/.access_key).
-
-## Skin points (change per CTF)
-Change: the helper's name/purpose, the hijacked command.
-Keep: setuid(0) + a bare-name system() call; no helpful sudo.
-
-## Blueprint mapping
-hosted; Dockerfile compiles the SUID root-owned +s; build.py plants /root files (placeholders) + records the vector.

@@ -26,20 +26,3 @@ the renderer to produce the true image.
    check that forces the "damaged" path.
 3. Patch the binary to pass the check, or reimplement the decode+VM from scratch.
 4. Render the real image (a QR/barcode/picture) and read/scan it for the secret.
-
-## What to plant
-- FLAG: encoded in the correctly rendered image.
-- ACCESS KEY: a bit alongside — e.g. a plaintext string in the viewer binary or a
-  side file, not inside the rendered image.
-
-## Skin points (change per CTF)
-Change: the layer choices (XOR/RLE/opcodes), the file extension, what the image is
-(QR vs ASCII art vs bitmap), the reason the renderer is "broken".
-Keep: layered decode → a mini drawing VM → an integrity gate that must be patched or
-bypassed → the image carries the flag.
-
-## Blueprint mapping
-- box_type: download; portal serves the custom file + the (crippled) renderer.
-- build.py encodes `__FLAG_<ID>__` into the image, emits the VM instruction stream,
-  applies RLE+XOR, and bakes the failing checksum into the shipped viewer;
-  `__ACCESS_KEY_<ID>__` planted as a side string.

@@ -23,19 +23,3 @@ resolver.
 1. Run the ARP sweep in the console -> spot the decommissioned host and read its
    retained asset token (the access key).
 2. Run a DNS TXT lookup for that host -> the record is the flag.
-
-## What to plant
-- FLAG: the target host's DNS TXT record.
-- ACCESS KEY: a bit alongside — the target host's asset-token field in the ARP
-  sweep output (a different data source).
-
-## Skin points (change per CTF)
-Change: subnet, host names/MACs, the "decommissioned" flavor, record wording.
-Keep: an ARP sweep listing hosts with the key on one host's line, a DNS TXT record
-holding the flag, and fetch-on-demand so the landing page stays clean.
-
-## Blueprint mapping
-hosted; nginx serving an interactive console page. build.py writes the console +
-two on-demand data files: the ARP-sweep data (`__ACCESS_KEY_<ID>__`) and the
-DNS/zone data (`__FLAG_<ID>__`), different files. Optionally a real DNS container
-instead of a simulated lookup.

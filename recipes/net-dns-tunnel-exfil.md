@@ -25,19 +25,3 @@ red herrings (DKIM/SPF/telemetry) mean the tell is behaviour, not label length a
 3. Extract labels in timestamp order; strip the domain suffix; concatenate.
 4. Base32-decode (re-pad) → the stolen record → the auth phrase.
 5. Submit the phrase to the gate → flag.
-
-## What to plant
-- FLAG: released by the gate on the correct decoded phrase (not in the capture).
-- ACCESS KEY: a bit alongside — in the shipped incident README or a companion log,
-  separate from the exfil stream and the flag.
-
-## Skin points (change per CTF)
-Change: the encoding (Base32/hex), attacker domain, record contents, the phrase, noise.
-Keep: DNS-tunnel exfil split across ordered subdomain labels at an abnormal rate;
-decode → phrase → gate; length alone isn't the tell.
-
-## Blueprint mapping
-- box_type: download (pcap + logs) + a tiny hosted unlock page.
-- build.py encodes the record (carrying the phrase) into the tunnel, self-verifies
-  decode==record and rate>baseline; gate holds `__FLAG_<ID>__`, `__ACCESS_KEY_<ID>__`
-  in the README/log.

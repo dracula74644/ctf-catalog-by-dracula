@@ -17,14 +17,3 @@ The only download is a mobile app package; all of the logic (boot flow, login ga
 2. Decode the identity secret (XOR the hex) and the admin passphrase (reverse + Base64).
 3. Run the app flow; submit the identity answer inside the timed window.
 4. Open the admin area, submit the passphrase; the flag is decoded from its XOR form.
-
-## What to plant
-- FLAG: revealed in-app only after the admin passphrase succeeds (stored XOR-encoded).
-- ACCESS KEY: a bit alongside — a second encoded value revealed at the same final step (never in plain strings, config, or the package filename).
-
-## Skin points (change per CTF)
-Change: the identity/passphrase values, XOR keys, the boot/story, the timeout length, the decoy creds.
-Keep: package-only download + statically-recoverable encoded secrets + a timed gate + XOR-encoded final flag.
-
-## Blueprint mapping
-download (signed app package). build.py encodes __FLAG_<ID>__ / __ACCESS_KEY_<ID>__ (and the gate secrets) into the app assets, then rebuilds and signs the package; keep any source mirror in sync.

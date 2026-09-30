@@ -17,14 +17,3 @@ A first capture carries several color-tagged route trails whose payloads are hex
 2. Follow the decoy color, confirm it is a dead end, then follow the real color to capture 2.
 3. Decode capture 2's payloads → final archive directory name.
 4. In that directory, ignore near-miss decoys (size trap is neutralized); open the exact-key file.
-
-## What to plant
-- FLAG: in the single exact-key file among the decoys.
-- ACCESS KEY: a bit alongside — a second line in that same exact-key file (never in the pcaps, listings, or decoy files).
-
-## Skin points (change per CTF)
-Change: colors/marks, ports/protocols, directory names, the decoy "wrong colour" taunt, filename near-misses.
-Keep: decoy vs real trail + slot-sorted hex fragments → directory chain + exact-key file among padded decoys.
-
-## Blueprint mapping
-hosted; static service serving capture 1 and the derived directories/captures. build.py encodes directory names into packet payloads and writes the exact-key file with __FLAG_<ID>__ / __ACCESS_KEY_<ID>__ plus padded decoys.

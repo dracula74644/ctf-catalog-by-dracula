@@ -16,14 +16,3 @@ One real account accepts SSH password auth. The password follows a derivable *sc
 1. From the recon leak, derive the small candidate grid.
 2. Brute-force the known username with it (hydra/patator).
 3. Log in and read the home dir.
-
-## What to plant
-- FLAG: in the account's home (e.g. user_flag.txt).
-- ACCESS KEY: a bit alongside — a nearby hidden file in the same home (e.g. .access_key, mode 600).
-
-## Skin points (change per CTF)
-Change: username, the scheme + wordlist, decoy names.
-Keep: password-auth on, a targeted-wordlist-only password, decoys.
-
-## Blueprint mapping
-hosted; SSH container in target/, password set at boot from TARGET_PASS. build.py plants the home files with placeholders.

@@ -22,19 +22,3 @@ there the player just increments the id.
 2. Read `robots.txt` → a disallowed internal path; the dir 403s but a named asset in
    it loads, hinting at an unlisted record.
 3. Request the next id past the public range → the private record → flag.
-
-## What to plant
-- FLAG: in the hidden/private record the IDOR exposes.
-- ACCESS KEY: a bit alongside — a separate field of that record or an adjacent
-  internal id, never the same line as the flag.
-
-## Skin points (change per CTF)
-Change: record type, id format, the asset name that hints at the hidden record, story.
-Keep: no authz on `?id=`, a sequential unlinked private record, a light robots/asset
-discovery trail.
-
-## Blueprint mapping
-- box_type: hosted; a small app serves records from a store through the viewer only.
-- build.py generates public + hidden records, injecting `__FLAG_<ID>__` into the
-  private one and `__ACCESS_KEY_<ID>__` into a separate field; robots.txt + one
-  reachable internal asset added as the hint.

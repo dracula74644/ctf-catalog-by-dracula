@@ -24,14 +24,13 @@ operator which to extract if it's ambiguous.
 
 1. **Understand it.** Work out: the vulnerability, how a player solves it end to end,
    and where the flag and (if any) access key are found.
-2. **Distill into a recipe.** Use `RECIPE-TEMPLATE.md` as the shape. Fill:
-   - **Mechanic (theme-agnostic):** the vuln and why it's exploitable.
-   - **Player solve path:** the numbered steps.
-   - **What to plant:** where the flag goes; where the access key goes *alongside but
-     in a different spot*.
-   - **Skin points:** what to change per CTF vs the mechanic that stays.
-   - **Blueprint mapping:** `box_type` (hosted/download/either), `category`
-     (with_key/without_key), and a short `build.py` sketch.
+2. **Distill into a recipe.** Use `RECIPE-TEMPLATE.md` as the shape. It focuses on the
+   challenge itself — fill the two sections:
+   - **Mechanic (theme-agnostic):** what the challenge is — the vuln, why it's
+     exploitable, and the moving parts the player interacts with.
+   - **Player solve path:** the numbered steps a player takes to reach the flag.
+   Capture `box_type` (hosted/download/either) and `difficulty` in the frontmatter, not
+   as prose sections.
 3. **SCRUB everything specific.** No company names, hostnames, usernames, IPs,
    story-bound filenames, flag strings, or the old CTF's name. Replace each with a
    generic role: "the company", "the admin account", "a config backup", "the target

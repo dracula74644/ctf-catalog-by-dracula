@@ -37,37 +37,3 @@ revoked copies, `xxd` to turn raw bytes into hex.
 6. Run `sha1sum` over the token backups and compare with the revocation list: one is not
    listed.
 7. Run `xxd -p -c 32` on that file: the 64 hex characters are the access key.
-
-## What to plant
-- FLAG: inside the one item whose checksum no longer matches the manifest, as a
-  readable payload string amid binary noise.
-- ACCESS KEY: a separate directory, in the one backup file absent from the revocation
-  list, stored as the blob's raw bytes, not as text.
-
-## Skin points (change per CTF)
-Change: account name, what the items and backups are called, the story of why one was
-swapped, file and folder names, how many decoys, the wording of the notes.
-Keep: one manifest signed before the swap; decoys that pass the check but carry fake
-flags; renamed junk that only `file` exposes; a hash-based revocation list; the token as
-raw bytes that need a hex dump.
-
-Direction matters here. Name each task and its tool in a README on the box, and explain
-the xxd flags where they are used: plain `xxd -p` wraps a 32-byte value onto two lines.
-Without that direction players found it arbitrary and too hard. Keep counts small: about
-six real items, three junk, three token backups.
-
-## Blueprint mapping
-- hosted: an isolated Alpine sshd container, with a busybox httpd credentials page on the
-  box port and SSH on a second port. The password is random per boot, written by
-  `build.py` and shown on the page. No runtime mounts: artifacts are baked into the image
-  and the entrypoint copies them into the home directory, then deletes the seed.
-- `build.py` writes the items, manifest, notes and backups. It plants `__FLAG_<ID>__` in
-  the live item and `__ACCESS_KEY_<ID>__` as hex text in the live backup; the entrypoint
-  converts that backup to raw bytes, because the verify step needs the blob visible as
-  text in artifacts.
-- The injector patches files as UTF-8 text, so binary noise must be valid UTF-8 (NULs,
-  control bytes, multibyte characters). Start each item with a fixed 8-byte lead-in, 0x01
-  then seven NULs, so libmagic reports "data" rather than a random match.
-- For class-scale logins, set `MaxStartups` far above the class size and drop the
-  container's `pids_limit`. The OpenSSH default refuses about a third of new logins once
-  thirty players are mid-login.

@@ -17,14 +17,3 @@ Source review reveals the "session token" is only Base64URL-encoded JSON — com
 2. Identify what the admin endpoint checks (role/iss/aud) and how the nonce is derived.
 3. Forge a token with `role=admin` and the right iss/aud; compute the deterministic nonce.
 4. Call the protected endpoint with the forged token + computed nonce.
-
-## What to plant
-- FLAG: in the admin endpoint's success response.
-- ACCESS KEY: a bit alongside — a second field in that same response, returned only after the forged token AND correct nonce are accepted (never in the source zip or login response).
-
-## Skin points (change per CTF)
-Change: claim names, the hard-coded nonce suffix, the endpoint path, the app story/framework.
-Keep: unsigned-JSON-as-token trusted for authz + a "nonce" that is a recomputable hash of known values.
-
-## Blueprint mapping
-download (source.zip) + hosted API. build.py rewrites the server so the admin endpoint returns __FLAG_<ID>__ and __ACCESS_KEY_<ID>__ only on forged-admin + correct-nonce.

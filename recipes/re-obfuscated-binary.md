@@ -16,14 +16,3 @@ A small native binary has all its strings obfuscated (XOR/rolling mask). The pla
 1. Load the binary; find the unmask function.
 2. Apply it to the masked arrays → gate password + secrets.
 3. Run with the gate input to reveal the rest.
-
-## What to plant
-- FLAG: printed when the binary is run with the recovered input.
-- ACCESS KEY: a bit alongside — a masked value you only get by *reading* the code (never printed).
-
-## Skin points (change per CTF)
-Change: the mask/algorithm, strings, the gate word.
-Keep: obfuscated strings + a reversible unmask routine; one read-only secret.
-
-## Blueprint mapping
-download; build.py compiles/obfuscates the binary with placeholders masked in.

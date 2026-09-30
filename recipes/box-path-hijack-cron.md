@@ -24,19 +24,3 @@ root and reads a root-only secret used to unlock the flag.
 3. Drop `<command>` in that dir: it copies a shell to a temp path and SUIDs it.
 4. Wait for cron → run the SUID shell with `-p` → root → read the root-only secret.
 5. Submit the secret to the vault gate → flag.
-
-## What to plant
-- FLAG: at a vault gate keyed on the root-only secret (env; not on the box in plain).
-- ACCESS KEY: a bit alongside — a note in the user's home or the vault README, separate
-  from the root secret and the flag.
-
-## Skin points (change per CTF)
-Change: the command being hijacked, the cron cadence, usernames/group, the story.
-Keep: group-writable dir early in a root cron job's PATH + bare command → drop-in →
-SUID root → read root secret → gate.
-
-## Blueprint mapping
-- box_type: hosted SSH box (NO cap_drop / no-new-privileges / read_only — SUID must
-  work) + a small vault service.
-- build.py sets up the cron job, the group-writable PATH dir, and writes the root
-  secret from env; vault holds `__FLAG_<ID>__`, `__ACCESS_KEY_<ID>__` planted in home.

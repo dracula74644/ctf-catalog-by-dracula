@@ -16,14 +16,3 @@ Among noise, a host beacons to an attacker IP:port at a fixed interval. The beac
 1. Spot the periodic connections to one dst (fixed interval, N beacons).
 2. Identify the C2 endpoint (flag).
 3. Read the key from a beacon reply.
-
-## What to plant
-- FLAG: the C2 destination (ip:port).
-- ACCESS KEY: a bit alongside — in a beacon reply body (a different packet than where you ID the endpoint).
-
-## Skin points (change per CTF)
-Change: attacker IP/port, interval, beacon count, protocol dressing.
-Keep: regular beaconing to one dst; key in the reply.
-
-## Blueprint mapping
-download; build.py generates the pcap with beacons + noise.

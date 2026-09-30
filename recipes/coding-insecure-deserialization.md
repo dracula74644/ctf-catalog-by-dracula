@@ -24,19 +24,3 @@ recovered phrase → which unlocks the flag.
 2. Craft an object whose `__reduce__` runs a command to read the server secret.
 3. Upload it with the accepted extension → RCE on import.
 4. The app displays the imported result, revealing the phrase → submit → flag.
-
-## What to plant
-- FLAG: server-side behind the phrase (env secret, not in shipped source). The secret
-  phrase lives in a server-only file that RCE reads.
-- ACCESS KEY: a bit alongside — a separate env value or file, not on the flag's line.
-
-## Skin points (change per CTF)
-Change: the deserializer/language, the "project file" story, the secret's path, copy.
-Keep: unsafe deserialize on upload + extension-only validation → RCE; the app surfaces
-imported content so the read secret is visible; real secrets env-injected.
-
-## Blueprint mapping
-- box_type: hosted; app source is the download (secrets stripped; container writable
-  where the app stages uploads and the secret file).
-- build.py builds the shipped zip minus compose/flag/solution; the phrase is written to
-  a server-only file from env and `__FLAG_<ID>__`/`__ACCESS_KEY_<ID>__` injected via env.

@@ -16,14 +16,3 @@ A root cron job runs a script whose output log is world-readable (the script its
 1. After a foothold, enumerate /etc/cron.d and /var/log.
 2. Find the report script + its log.
 3. Read the token from the log/script.
-
-## What to plant
-- FLAG: in the cron script's output log (or the script).
-- ACCESS KEY: a bit alongside — a different line of the log, or the script's header comment.
-
-## Skin points (change per CTF)
-Change: the job's name/purpose, paths, cadence.
-Keep: a root cron job with a readable log; readable-not-writable script.
-
-## Blueprint mapping
-hosted; entrypoint installs the cron file + runs the script once; build.py writes the script/log with placeholders.

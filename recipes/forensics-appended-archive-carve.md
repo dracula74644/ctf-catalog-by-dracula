@@ -17,14 +17,3 @@ A perfectly valid image opens normally as a picture but has an archive appended 
 2. `binwalk -e` (or carve at the archive offset) to pull the appended archive.
 3. Open the notes file; follow it to the nested image.
 4. `strings`/metadata on the nested image → flag.
-
-## What to plant
-- FLAG: in the strings/metadata of the innermost nested image.
-- ACCESS KEY: a bit alongside — a second line in that same nested image (never in the outer JPEG EXIF, the notes file, or page hints).
-
-## Skin points (change per CTF)
-Change: the cover image, the hint wording, the archive nesting, the notes story.
-Keep: valid image + appended archive carves cleanly → notes → nested image whose secret is in strings/metadata.
-
-## Blueprint mapping
-download (the outer image). build.py writes __FLAG_<ID>__ / __ACCESS_KEY_<ID>__ into the nested image, rebuilds the inner archive, and appends it to the cover image.

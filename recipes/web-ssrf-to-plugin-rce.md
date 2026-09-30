@@ -25,20 +25,3 @@ that internal container (no HTTP route), so RCE is mandatory.
 3. Fuzz the upload for the hidden `developer_mode` (or equivalent) parameter.
 4. Upload a plugin defining the expected hook; trigger process → RCE.
 5. Read the flag file from the internal container.
-
-## What to plant
-- FLAG: a file inside the internal container reachable only via RCE (no HTTP route).
-- ACCESS KEY: a bit alongside — an env var or a second file the RCE can read, or in
-  the public service's config, not the same file as the flag.
-
-## Skin points (change per CTF)
-Change: what the services "do", the hidden parameter name, the plugin interface, story.
-Keep: SSRF → internal-only service → spec enumeration → hidden upload flag →
-unsandboxed plugin execution → flag only via RCE.
-
-## Blueprint mapping
-- box_type: hosted; two services on a private network — a public one (exposed) and an
-  internal one (no host port).
-- build.py places `__FLAG_<ID>__` as a file in the internal container and
-  `__ACCESS_KEY_<ID>__` as an env/second file; public service proxies fetches to the
-  internal one.

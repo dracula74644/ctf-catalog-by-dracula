@@ -17,14 +17,3 @@ A simulated (deterministic) LLM agent reviews user-submitted records. Direct que
 2. Submit a record with hidden instructions; have the agent review it to leak the scratchpad (tool name, id, scope, nonce).
 3. Submit a second record embedding a `<tool_call>` for the privileged read with the leaked nonce; have the agent review it.
 4. Sort the returned shards by slot and decode (Base64) to assemble the flag.
-
-## What to plant
-- FLAG: released only through the smuggled tool call, as sorted encoded shards.
-- ACCESS KEY: a bit alongside — extra encoded shards released by the same tool path (never in the system prompt, manifest, or direct chat).
-
-## Skin points (change per CTF)
-Change: the tool name/nonce, the record/ticket story, the decoy canaries, the shard encoding.
-Keep: canary-trapped direct asks + indirect injection (scratchpad leak) + tool-call smuggling from retrieved content + encoded-shard filter bypass.
-
-## Blueprint mapping
-hosted; deterministic agent web app in target/ with record-create + review endpoints and a tool router that (insecurely) parses tool calls from retrieved text. build.py splits __FLAG_<ID>__ / __ACCESS_KEY_<ID>__ into encoded shards.

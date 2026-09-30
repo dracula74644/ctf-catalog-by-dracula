@@ -25,19 +25,3 @@ timeline, extracts the password from RAM, undeletes the file, and opens the arch
 3. Carve the archive password out of the memory dump (clipboard / process cmdline).
 4. Undelete the archive from the removable-media image (fls/icat-style recovery).
 5. Extract with the recovered password → flag.
-
-## What to plant
-- FLAG: only inside the encrypted archive; password only in RAM (never on disk whole).
-- ACCESS KEY: a bit alongside — in the incident report or case notes, a separate
-  artifact from the flag archive.
-
-## Skin points (change per CTF)
-Change: the cover story, which artifact types you ship, the exact timestamps.
-Keep: multi-source timeline reveals true event order; password recoverable only from
-memory; a deleted file to undelete; flag only in the sealed archive.
-
-## Blueprint mapping
-- box_type: download; portal serves the case bundle.
-- build.py generates each artifact with consistent timestamps, plants the password in
-  the memory image, deletes the archive on the media image, and seals `__FLAG_<ID>__`
-  (+ `__ACCESS_KEY_<ID>__` in the report) in the encrypted archive.

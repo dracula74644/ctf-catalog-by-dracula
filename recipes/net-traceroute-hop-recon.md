@@ -25,20 +25,3 @@ picking the right hop among decoys, not a crypto puzzle.
 2. Enumerate a gate (robots.txt / an index) that names the unlisted internal targets.
 3. Trace each internal target; read the reverse-DNS name of the anomalous hop.
 4. One internal trace's hop name is the flag; a different one's carries the key.
-
-## What to plant
-- FLAG: the resolved hostname of a hop in one internal trace.
-- ACCESS KEY: a bit alongside — a hop hostname in a *different* internal trace
-  (separate file), never the same trace/line.
-
-## Skin points (change per CTF)
-Change: node/host names, domain, the enumeration gate (robots vs directory index
-vs a page comment), the decoy hops. Keep: public traces clean, internal targets
-gated by enumeration, secrets = hop hostnames fetched on demand, flag and key on
-two different traces.
-
-## Blueprint mapping
-hosted; static web server in target/. build.py writes an interactive console page
-(public traces inline, internal traces fetched from separate data files) plus the
-enumeration gate; the two internal trace data files carry `__FLAG_<ID>__` and
-`__ACCESS_KEY_<ID>__` (different files). No live traceroute required.

@@ -10,21 +10,12 @@ status: built | idea
 ---
 
 ## Mechanic (theme-agnostic)
-The vulnerability and why it's exploitable — no story, no company names. This is
-the part you reuse forever.
+What the challenge is: the vulnerability, why it's exploitable, and the moving parts
+a player interacts with — in the abstract, no story, no company names, no filenames.
+Be specific about the technique; this is the part you reuse forever.
 
 ## Player solve path
+How the player reaches the flag, step by step. Name the recon that reveals the way in,
+the exact move that breaks it, and where the flag lands at the end.
 1. ...
 2. ...
-
-## What to plant
-- FLAG: where the flag ends up.
-- ACCESS KEY: a bit alongside — a separate, nearby spot (never the same line/file).
-
-## Skin points (change per CTF)
-Change: names, story, filenames, copy.
-Keep: the mechanic above.
-
-## Blueprint mapping
-- box_type + what target/ (if any) runs.
-- what build.py generates (with __FLAG_<ID>__ / __ACCESS_KEY_<ID>__ placeholders).

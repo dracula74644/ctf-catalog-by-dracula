@@ -26,20 +26,3 @@ lock. The flag/reward is stored obfuscated (XOR+Base64) and decoded at runtime.
 3. Fire it: `adb shell am start -a <action>` (or matching intent) to set the
    persisted unlock flag.
 4. Re-open the app — now unlocked; it decodes and displays the reward/flag.
-
-## What to plant
-- FLAG: XOR/Base64-sealed in the app, decoded only after the unlock flag is set.
-- ACCESS KEY: a bit alongside — in a separate resource/string or a second pref key,
-  not in the same sealed blob as the flag.
-
-## Skin points (change per CTF)
-Change: the lock premise (date/geofence/counter), the component type/action name,
-the reward screen's look.
-Keep: an unmeetable gate defeated only via a hidden exported component + intent; a
-persisted unlock flag; obfuscated reward decoded at runtime.
-
-## Blueprint mapping
-- box_type: download; portal serves the `.apk`.
-- build.py seals `__FLAG_<ID>__` (XOR+Base64) behind the exported-component unlock
-  and plants `__ACCESS_KEY_<ID>__` in a separate resource; native reference time
-  compiled in so clock edits fail.

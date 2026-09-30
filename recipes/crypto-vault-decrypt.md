@@ -16,14 +16,3 @@ A sealed blob opens only with a passphrase obtained from an earlier challenge. I
 1. Get the outer passphrase (from a prior stage).
 2. openssl aes-256-cbc -d the outer blob → a note.
 3. The note names the inner password; decrypt the inner block.
-
-## What to plant
-- FLAG: in the innermost plaintext.
-- ACCESS KEY: a bit alongside — a separate line of the inner plaintext, or the note between layers.
-
-## Skin points (change per CTF)
-Change: cipher params, the passwords, the note story, layer count.
-Keep: a passphrase-gated blob whose note reveals the next password.
-
-## Blueprint mapping
-download; build.py encrypts the layers with placeholders in the plaintext.
