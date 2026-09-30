@@ -71,6 +71,10 @@
     modal.showModal();
   }
 
+  function section(body,name){
+    var re=new RegExp("(?:^|\\n)##\\s*"+name+"[^\\n]*\\n([\\s\\S]*?)(?:\\n##\\s|$)","i");
+    var m=(body||"").match(re); return m?m[1].trim():"";
+  }
   var CATALOG = {
     data:[], state:{cat:"",diff:"",ctf:""}, FIXED_CATS:FIXED_CATS,
     esc:esc, md:md, promptFor:promptFor, copy:copy, toast:toast, openModal:openModal,
@@ -87,9 +91,14 @@
     },
     byslug:function(s){return this.data.find(function(r){return r.slug===s;});},
     cardHTML:function(r){
+      var mech=section(r.body,"Mechanic");
+      var steps=section(r.body,"Player solve path").split("\n").map(function(s){return s.replace(/^\s*\d+\.\s*/,"").replace(/^[-*]\s*/,"").trim();}).filter(Boolean);
+      var solve=steps.join(" → ");
       return '<article class="box" data-slug="'+esc(r.slug)+'">'+
         '<div class="cattag">'+esc(r.category)+'</div>'+
         '<h2>'+esc(r.title)+'</h2>'+
+        (mech?'<p class="desc">'+esc(mech)+'</p>':'')+
+        (solve?'<div class="solve"><span class="lbl">Solve</span> '+esc(solve)+'</div>':'')+
         '<div class="badge '+r.difficulty+'">'+esc(r.difficulty)+'</div>'+
         '<div class="skills">'+(r.skills||[]).map(function(s){return '<span class="skill">'+esc(s)+'</span>';}).join("")+'</div>'+
         (r.source_ctf?'<div class="src">from <b>'+esc(r.source_ctf)+'</b></div>':'')+
