@@ -10,16 +10,17 @@ status: built
 ---
 
 ## Mechanic (theme-agnostic)
-Footprint a host by chaining passive discovery + active recon against *self-hosted*
-look-alikes (real public services like Shodan/whois can't be seeded with your
-data). An advertised **search/index page** (a self-hosted host-search clone) orients
-the player: it shows the host, its open ports, and hints — but no secrets. A
-**self-hosted whois service** (raw TCP, port 43) returns a registration record whose
-free-text *remarks* field is the flag. A separate **raw-TCP banner service** emits a
-banner containing the access key, lifted with a banner grab (dmitry/nc). The two
-secrets live in two different self-hosted services.
+A Shodan-style search clone, queried by organisation, discloses the target host, its
+open ports, and a domain that "resolves to this deployment". Two of those services then
+leak the secrets: a whois service on port 43 returns the flag in a `Remarks` field when
+queried for the domain, and a second service port returns the access token in its
+banner / a response header (e.g. an `X-Access-Token` line). The chain is pure external
+footprinting — discover via search, confirm via whois, then banner-grab — with no
+exploitation.
 
 ## Player solve path
-1. Use the search page to find the host, its domain, and the open ports.
-2. whois the domain against the host -> the remarks field is the flag.
-3. Banner-grab the diagnostics port -> the banner line is the access key.
+1. Search the Shodan-clone for the org → the host, its open ports, and the domain.
+2. Query whois for the domain against the host's port 43 (`whois -h <host> <domain>`, or
+   a raw `nc <host> 43` query) and read the `Remarks` field → the flag.
+3. Banner-grab the other disclosed service port (`dmitry -pb`, or `nc <host> <port>`).
+4. Read the banner/header (e.g. `X-Access-Token`) → the access key.

@@ -10,16 +10,17 @@ status: built
 ---
 
 ## Mechanic (theme-agnostic)
-On load, a page fires background XHR/fetch requests to API endpoints, and those
-endpoints return JSON that carries sensitive tokens the UI never displays (the page
-renders only benign fields). Because the secrets travel in responses that are not in
-the rendered page and not in the main HTML source, the player must observe the
-browser's own traffic: routing the browser through an intercepting proxy (or the
-network tab) exposes the background request/response pairs and the tokens inside.
-Exploitable because sensitive data is returned to the client regardless of what the
-interface chooses to show.
+On load, the page auto-fires background XHR/fetch calls whose JSON responses contain
+secrets that never appear in the rendered UI. One endpoint (a telemetry/status API)
+returns a response with the flag tucked in a `_debug` field; another (a session/auth
+API) returns an access token. Because the leak is in traffic the browser makes on its
+own, an intercepting proxy (Burp Suite, or the browser devtools Network tab) is the
+intended way to see it — watch HTTP history after the page loads and read the two
+background responses. Hitting the endpoints directly with curl is the equivalent.
 
 ## Player solve path
-1. Point the browser's proxy at an intercepting proxy; load the target.
-2. In the proxy's HTTP history, find the background requests the page fired on load.
-3. Read the tokens out of those JSON responses.
+1. Point the browser's HTTP proxy at an intercepting proxy (e.g. Burp on 127.0.0.1:8080).
+2. Load the page and watch HTTP history for the auto-fired background API calls.
+3. Read the telemetry/status response's `_debug` field → the flag.
+4. Read the session/auth response's `session_token` → the access key.
+5. (Equivalent: `curl -s <url>/api/telemetry` and `curl -s <url>/api/auth/session`.)

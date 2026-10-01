@@ -10,16 +10,18 @@ status: built
 ---
 
 ## Mechanic (theme-agnostic)
-A short, realistic capture of one host's traffic, about thirty-five packets: ARP, DNS
-lookups, NTP, ICMP pings, syslog lines and one keep-alive HTTP session to an internal
-service. During the session the host fetches a report, and the flag sits in the JSON body
-of that HTTP response. Separately it resolves a name with a TXT query, and the access key
-sits in the TXT answer. Two protocols, two packets, found by filtering rather than by
-reading every packet.
+Players download a packet capture that carries two independent channels. An HTTP
+session on an application port contains a JSON response body whose `verdict`-style field
+holds the flag. Separately, DNS traffic in the same capture carries the access token in
+a TXT-style answer. Neither secret is in packet headers or filenames — each is in the
+payload of its respective protocol, so the solve is about applying the right
+protocol/BPF filter to each channel and reading the application data.
 
 ## Player solve path
-1. Download the capture.
-2. Filter to the HTTP session, for example `netsniff-ng --in cap.pcap -f "tcp port <n>"`
-   or `tcpdump -A -r cap.pcap 'tcp port <n>'`. The report response body holds the flag.
-3. Filter to DNS with `udp port 53`. The TXT answer for one lookup holds the access key.
-4. Or `strings cap.pcap | grep` for either value.
+1. Download the capture from the box.
+2. Filter the HTTP/application-port traffic and extract the JSON field, e.g.
+   `tcpdump -A -r cap.pcap 'tcp port <app>' | grep -o '"verdict":"[^"]*"'` → the flag.
+3. Filter the DNS traffic and read the answer, e.g.
+   `tcpdump -A -r cap.pcap 'udp port 53' | grep -o 'token=[0-9a-f]*'` → the access key.
+4. (`netsniff-ng --in cap.pcap -f "<bpf>"` or `strings cap.pcap | grep -E 'verdict|token='`
+   recover the same two values.)

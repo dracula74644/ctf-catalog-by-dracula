@@ -10,20 +10,21 @@ status: built
 ---
 
 ## Mechanic (theme-agnostic)
-A shell account holds two short bash scripts that used to work and now fail, each broken
-by a few deliberate beginner mistakes. Once repaired, each script does a little system
-reconnaissance (host, kernel, user, uptime, disk, network, processes, listening ports) and
-then prints one secret it assembles from state files elsewhere on the box. One script
-yields the access key, the other the flag.
-
-The skill is reading error messages and using `bash -n` to locate problems, not
-exploitation. The mistakes are a mix of syntax errors (a missing `then`, a block closed
-with the wrong keyword, an unterminated quote, a missing closing parenthesis on a command
-substitution) and keyword or command typos (`esle`, `ehco`).
+Players SSH into a box holding two recon shell scripts that refuse to run because of
+deliberately introduced syntax errors. The bugs are classic shell mistakes: a mistyped
+command (`ehco` for `echo`, `esle` for `else`), an `if [ ... ]` test missing its
+`; then`, a block closed with the wrong keyword (`done` where `fi` is required, or vice
+versa), and an unbalanced quote or parenthesis. Each script, once it parses, performs
+host recon and prints a secret at the end — one script yields the flag, the other yields
+the access token. `bash -n <script>` is the key tool: it reports the syntax errors line
+by line without executing anything, turning the task into read-fix-rerun.
 
 ## Player solve path
-1. Log in with the credentials the box page hands out.
-2. Run each script and read the error, or run `bash -n` on it to list syntax errors.
-3. Fix the mistakes in an editor on the box. There are three per script.
-4. Run the key script: recon output, then the access key.
-5. Run the flag script: recon output, then the flag.
+1. SSH in and run each script; observe the "command not found" / "syntax error near
+   unexpected token" failures.
+2. Run `bash -n <script>` to locate each syntax error by line.
+3. Fix the bugs in an editor (`nano`/`vim`): correct the command typos, add the missing
+   `; then`, match each block's terminator (`fi`/`done`), and balance quotes/parens.
+4. Re-run `bash -n` until clean, then execute each script.
+5. Read the printed output — one script's final line is the flag, the other's is the
+   access key.

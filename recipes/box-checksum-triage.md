@@ -10,30 +10,23 @@ status: built
 ---
 
 ## Mechanic (theme-agnostic)
-A shell account holds a small set of look-alike binary files plus a checksum manifest
-that was signed *before* one file was swapped. Every file carries a plausible secret,
-so reading them all proves nothing; the only thing that singles out the real one is
-integrity. A few decoys are junk renamed to the same extension, so the player has to
-classify files by content, not by name, before checking them.
-
-The second secret is a token stored as **raw bytes** in one of a handful of backup
-files. A revocation list names the dead backups by their SHA-1. Hashing the backups and
-eliminating the listed ones leaves exactly one, which is then hex-dumped into the
-submittable value.
-
-Each standard triage tool has one visible job: `less` to read instructions at the end of
-a long file, `file` to tell real data from renamed junk, `md5sum -c` to find the item
-that no longer matches, `strings` to pull text out of binary, `sha1sum` to eliminate
-revoked copies, `xxd` to turn raw bytes into hex.
+Players SSH into a box and triage a set of files by integrity. A checksum manifest
+(e.g. `CHECKSUMS.md5`) was generated *before* a live file was swapped in, so the one
+tampered/live file is exactly the entry whose hash now FAILS verification. A directory
+of same-extension blobs (all `.dat`) deliberately mixes genuine data files with renamed
+junk — PNG, gzip, and plain text masquerading as `.dat` — so `file` type-identification
+is needed to discard the decoys before checksumming. The flag is embedded as a
+`payload=` string inside the single real file that fails the checksum. A separate access
+token is stored as raw bytes in one of several key backups; the valid backup is the one
+whose SHA-1 is NOT present in a revocation list, so the player diffs computed hashes
+against that list. Clues to all of this sit in operator notes at the end of a long log.
 
 ## Player solve path
-1. Log in with the credentials the box page hands out.
-2. Read the task list, then page to the end of a long log for the notes that explain how
-   to interpret results.
-3. Run `file` across the folder: real items report as data, junk reports as an image,
-   an archive or text.
-4. Run `md5sum -c` against the manifest: exactly one real item fails. That is the live one.
-5. Run `strings` on it: its payload line is the flag. The other items hold decoy flags.
-6. Run `sha1sum` over the token backups and compare with the revocation list: one is not
-   listed.
-7. Run `xxd -p -c 32` on that file: the 64 hex characters are the access key.
+1. SSH in and read the task/README; page to the end of the long log (`less`, then `G`)
+   for the operator notes that explain the three sub-tasks.
+2. Run `file <dir>/*` to separate genuine data files from renamed junk (PNG/gzip/text).
+3. Verify the manifest and keep only the mismatch: `md5sum -c CHECKSUMS.md5 | grep -v OK`
+   → the one real file that FAILED.
+4. `strings` that file and grep for `payload=` → the flag.
+5. `sha1sum` the key backups, compare against the revocation list, and `xxd -p` the one
+   backup whose hash is not revoked → the access key.

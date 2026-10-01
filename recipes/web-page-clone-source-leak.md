@@ -10,17 +10,18 @@ status: built
 ---
 
 ## Mechanic (theme-agnostic)
-A served web page hides sensitive tokens in the delivered client source rather than
-on the rendered screen: one token sits in an HTML comment in the page itself, and a
-second token sits in a static asset the page links (a script/style bundle). Neither
-is visible in the browser, but both are fully readable in the source — and, crucially,
-a recursive site-cloner or mirror (or plain view-source plus fetching the linked file)
-pulls the page AND its linked assets together, so cloning the page hands the player
-both tokens at once. Exploitable because everything shipped to the client — page
-source and bundled assets — is readable by anyone who looks past the rendered UI.
+A website leaks secrets into the static material a site-cloner pulls down. The landing
+page's HTML hides one secret in a developer/debug HTML comment that never renders
+visibly (the flag), and a linked JavaScript asset embeds a second secret as an
+"asset-integrity token" dressed up as a CI/CD value (the access key). Because both live
+in page source and a linked file, cloning the site (e.g. the Social-Engineer Toolkit
+Site Cloner, which fetches the page plus its linked assets into a local web root) and
+grepping the result surfaces both — exactly the information-disclosure the challenge
+teaches. Fetching the page and its asset directly with curl is the equivalent.
 
 ## Player solve path
-1. Mirror/clone the page (recursive fetch) or open view-source.
-2. Read the token left in an HTML comment near the top of the page source.
-3. Follow the linked static asset the clone also fetched; read the token in its
-   header/comment.
+1. Clone the site with a site-cloner (or just fetch the landing page and its linked JS).
+2. Grep the cloned HTML for a debug/developer comment → the flag.
+3. Grep the linked JS asset for the "integrity token" value → the access key.
+4. (Equivalent check: `curl -s <url>/ | grep -i debug` and
+   `curl -s <url>/assets/app.js | grep -i 'integrity token'`.)

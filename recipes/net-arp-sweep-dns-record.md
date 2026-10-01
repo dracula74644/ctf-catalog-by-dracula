@@ -10,16 +10,17 @@ status: built
 ---
 
 ## Mechanic (theme-agnostic)
-A hosted operations **console** lets the player run local-network recon commands and
-streams the (simulated) output. An **ARP sweep** of a subnet lists the hosts; one
-*decommissioned* host carries a retained "asset token" on its inventory line — that
-token is the access key. A **DNS TXT lookup** for that same host returns the flag.
-Both are fetched on demand when the commands run, so nothing is in the landing page
-source. Layer-2 ARP can't run live against a single routed host, so the sweep is
-produced application-side; DNS can be simulated the same way or served by a real
-resolver.
+A hosted ground-segment console runs L2/L3 recon against a local segment. An ARP sweep
+of the subnet enumerates the live hosts, and one of them carries a retained "asset
+token" (the access key) as part of its inventory entry. Separately, a DNS TXT record for
+one of the host names resolves to the flag. The challenge is straightforward
+enumeration: inventory the segment by ARP, spot the host holding the token, and pull the
+TXT record for the flag.
 
 ## Player solve path
-1. Run the ARP sweep in the console -> spot the decommissioned host and read its
-   retained asset token (the access key).
-2. Run a DNS TXT lookup for that host -> the record is the flag.
+1. Run an ARP sweep of the local subnet (`arp-scan -l`) to list the hosts.
+2. Identify the host whose inventory entry carries a retained asset token → the access
+   key.
+3. Query the TXT record for the relevant host name
+   (`nslookup -type=TXT <host>` / `dig TXT <host>`).
+4. Read the TXT answer → the flag.

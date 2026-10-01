@@ -10,21 +10,21 @@ status: built
 ---
 
 ## Mechanic (theme-agnostic)
-A service streams a long run of plaintext telemetry frames, one per second for a couple
-of minutes, down a TCP connection the player opens. Most frames are sensor noise. In
-every cycle one frame carries the flag and a few frames later another carries the access
-key. The player runs a packet capture on their own machine while the stream flows, then
-reads the two frames out of the capture.
-
-The service root serves an instructions page that streams nothing and prints the exact
-commands, filled in with the host and port the player actually typed.
+A hosted service emits a continuous stream of plaintext telemetry records over HTTP.
+Most records are benign readings, but two special record types are mixed in: a NOTE
+record that carries the flag and a KEY record that carries the access token. Nothing is
+written to disk and the secrets are not shown in any UI — the record only exists on the
+wire while the stream is open. So the player must run a packet capture on their own
+interface, pull the stream to generate traffic, then recover the secrets from the saved
+capture by filtering for the two special record types. The box page itself does not
+stream secrets; it prints the exact capture commands to run.
 
 ## Player solve path
-1. Open the service root in a browser or with curl and read the instructions.
-2. Find the capture interface with `ip link`, then start a capture with
-   `sudo netsniff-ng --in <iface> --out stream.pcap`.
-3. Open the stream: `curl -N http://<host>:<port>/<stream-path>`, a browser, or a bare `nc`.
-4. After about thirty seconds, stop the capture.
-5. Read it: `netsniff-ng --in stream.pcap`, or pull whole frames with
-   `strings stream.pcap | grep` on the frame type. The flag frame and the key frame are
-   separate.
+1. Read the box page for the instructions and the stream endpoint.
+2. Start a capture on your own interface (`netsniff-ng --in <iface> --out cap.pcap`, or
+   `tcpdump -i <iface> -w cap.pcap`).
+3. In a second terminal, open the stream to generate traffic (`curl -N http://<host>/stream`
+   or `nc`), and let it run ~30 s.
+4. Stop the capture and grep the records: `strings cap.pcap | grep -E 'kind=(NOTE|KEY)'`
+   (or `tcpdump -A -r cap.pcap | grep -E 'NOTE|KEY'`).
+5. Take the flag from the NOTE record and the access key from the KEY record.

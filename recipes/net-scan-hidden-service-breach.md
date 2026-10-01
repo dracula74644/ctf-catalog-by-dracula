@@ -10,17 +10,20 @@ status: built
 ---
 
 ## Mechanic (theme-agnostic)
-The host publishes an **advertised web app** (a breach-lookup / "have-I-been-pwned"
-style portal) **and a second, unadvertised service on a different port**. Querying
-the portal for a given account returns records: one holds the flag, another warns
-that an internal archive is still exposed on an unlisted port. The player must
-**port-scan the host** to find that second service, then match the *same account's*
-row in the leaked dump to recover the access key. Decoy rows/accounts make blind
-guessing fail. Neither secret is on the landing page — both require the recon.
+An advertised "breach lookup" web service lets you query an account and returns its
+leaked records; one record's recovery note is the flag. Another record hints that an
+internal leak archive is still exposed on an *unlisted* port of the same host — a port
+the portal never links. Port-scanning the host reveals that extra open service (Service
+B) alongside the advertised ones. Service B lists per-account rows, and matching your
+queried account's row yields the submission/access token. The challenge chains an
+information leak into a service-discovery step and a correlation step (same account
+across two services).
 
 ## Player solve path
-1. Query the advertised lookup portal for the target account -> flag in a record;
-   note the hint about an exposed service on an unlisted port.
-2. Port-scan the host to discover the unadvertised service.
-3. Open it; find the target account's row in the dump -> that field is the key
-   (decoy rows are rejected by the platform).
+1. Query your account in the advertised breach-lookup service → the flag in a recovery
+   note.
+2. Note the record hinting that an internal leak archive is exposed on an unlisted port.
+3. Port-scan the host (nmap / a TCP-connect sweep) to find the extra open port not
+   linked by the portal.
+4. Open that hidden leak-archive service and find the row for your account.
+5. Read that row's token → the access key.
